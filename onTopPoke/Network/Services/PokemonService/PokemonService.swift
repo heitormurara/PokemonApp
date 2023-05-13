@@ -1,5 +1,5 @@
 enum PokemonService {
-    case getSpecies(limit: Int, offset: Int)
+    case getSpecies(_ page: Page)
 }
 
 extension PokemonService: NetworkService {
@@ -17,10 +17,10 @@ extension PokemonService: NetworkService {
         }
     }
     
-    var parameters: [String : Any]? {
+    var parameters: [String : String]? {
         switch self {
-        case let .getSpecies(limit, offset):
-            return ["limit": limit, "offset": offset]
+        case let .getSpecies(page):
+            return ["limit": String(page.limit), "offset": String(page.offset)]
         }
     }
     

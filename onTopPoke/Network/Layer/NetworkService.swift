@@ -9,7 +9,7 @@ protocol NetworkService {
     var path: String { get }
     
     /// The parameters to be added as `URLQueryItem`s
-    var parameters: [String: Any]? { get }
+    var parameters: [String: String]? { get }
     
     /// The HTTP method used in the request
     var method: HTTPMethod { get }
@@ -33,7 +33,7 @@ extension NetworkService {
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.path = path
         
-        if method == .get, let parameters = parameters as? [String: String] {
+        if method == .get, let parameters = parameters {
             urlComponents?.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
         }
         

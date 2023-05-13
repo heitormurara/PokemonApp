@@ -19,7 +19,7 @@ extension PokeAPIService: NetworkService {
         }
     }
     
-    var parameters: [String : Any]? {
+    var parameters: [String : String]? {
         nil
     }
     
