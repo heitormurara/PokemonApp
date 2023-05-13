@@ -33,8 +33,8 @@ final class NetworkServiceProvider<Service: NetworkService>: NetworkServiceProvi
             do {
                 let decoded = try JSONDecoder().decode(E.self, from: data)
                 completion(.success(decoded))
-            } catch (let error) {
-                completion(.failure(NetworkServiceError.decodingFailure))
+            } catch let error {
+                completion(.failure(error))
             }
         }.resume()
     }
