@@ -65,6 +65,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		586FB3B62A0FE13D0003D2AB /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				58A6D6632A0F3EF600902695 /* HTTPMethod.swift */,
+				58A6D6652A0F3F3500902695 /* NetworkService.swift */,
+				586FB3B22A0F47720003D2AB /* NetworkServiceError.swift */,
+				586FB3B02A0F42BE0003D2AB /* NetworkServiceProvider.swift */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		586FB3B72A0FE1460003D2AB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		58A6D6542A0F3A5800902695 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,10 +143,8 @@
 		710FC30D2A02DD5500899EA2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				58A6D6632A0F3EF600902695 /* HTTPMethod.swift */,
-				58A6D6652A0F3F3500902695 /* NetworkService.swift */,
-				586FB3B22A0F47720003D2AB /* NetworkServiceError.swift */,
-				586FB3B02A0F42BE0003D2AB /* NetworkServiceProvider.swift */,
+				586FB3B62A0FE13D0003D2AB /* Layer */,
+				586FB3B72A0FE1460003D2AB /* Services */,
 			);
 			path = Network;
 			sourceTree = "<group>";
