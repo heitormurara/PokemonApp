@@ -16,7 +16,9 @@
 		586FB3C22A0FE4700003D2AB /* SpeciesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3C12A0FE4700003D2AB /* SpeciesListPresenter.swift */; };
 		586FB3C52A1010050003D2AB /* PokeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3C42A1010050003D2AB /* PokeAPIService.swift */; };
 		586FB3C72A1021200003D2AB /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3C62A1021200003D2AB /* Page.swift */; };
-		58A6D65D2A0F3BDA00902695 /* onTopPokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A6D65C2A0F3BDA00902695 /* onTopPokeTests.swift */; };
+		586FB3CC2A1031190003D2AB /* SpeciesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3CB2A1031190003D2AB /* SpeciesListPresenterTests.swift */; };
+		586FB3D32A1032CE0003D2AB /* SpeciesListViewControllerDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3D22A1032CE0003D2AB /* SpeciesListViewControllerDummy.swift */; };
+		586FB3D92A1033A50003D2AB /* NetworkServiceProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3D82A1033A50003D2AB /* NetworkServiceProviderMock.swift */; };
 		58A6D6642A0F3EF600902695 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A6D6632A0F3EF600902695 /* HTTPMethod.swift */; };
 		58A6D6662A0F3F3500902695 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A6D6652A0F3F3500902695 /* NetworkService.swift */; };
 		710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710FC2F92A02DBA000899EA2 /* AppDelegate.swift */; };
@@ -46,8 +48,10 @@
 		586FB3C12A0FE4700003D2AB /* SpeciesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListPresenter.swift; sourceTree = "<group>"; };
 		586FB3C42A1010050003D2AB /* PokeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPIService.swift; sourceTree = "<group>"; };
 		586FB3C62A1021200003D2AB /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		586FB3CB2A1031190003D2AB /* SpeciesListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListPresenterTests.swift; sourceTree = "<group>"; };
+		586FB3D22A1032CE0003D2AB /* SpeciesListViewControllerDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewControllerDummy.swift; sourceTree = "<group>"; };
+		586FB3D82A1033A50003D2AB /* NetworkServiceProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProviderMock.swift; sourceTree = "<group>"; };
 		58A6D65A2A0F3BDA00902695 /* onTopPokeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = onTopPokeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		58A6D65C2A0F3BDA00902695 /* onTopPokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onTopPokeTests.swift; sourceTree = "<group>"; };
 		58A6D6632A0F3EF600902695 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		58A6D6652A0F3F3500902695 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		710FC2F62A02DBA000899EA2 /* onTopPoke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = onTopPoke.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +134,87 @@
 			path = PokeAPIService;
 			sourceTree = "<group>";
 		};
+		586FB3C92A1030EB0003D2AB /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3CA2A1030F10003D2AB /* Species List */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		586FB3CA2A1030F10003D2AB /* Species List */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3CB2A1031190003D2AB /* SpeciesListPresenterTests.swift */,
+			);
+			path = "Species List";
+			sourceTree = "<group>";
+		};
+		586FB3CD2A1032870003D2AB /* Test Doubles */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D02A1032B70003D2AB /* Modules */,
+				586FB3D52A1033850003D2AB /* Network */,
+			);
+			path = "Test Doubles";
+			sourceTree = "<group>";
+		};
+		586FB3CE2A1032940003D2AB /* onTopPoke */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3C92A1030EB0003D2AB /* Modules */,
+			);
+			path = onTopPoke;
+			sourceTree = "<group>";
+		};
+		586FB3D02A1032B70003D2AB /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D12A1032BE0003D2AB /* Species List */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		586FB3D12A1032BE0003D2AB /* Species List */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D42A10331B0003D2AB /* SpeciesListViewController */,
+			);
+			path = "Species List";
+			sourceTree = "<group>";
+		};
+		586FB3D42A10331B0003D2AB /* SpeciesListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D22A1032CE0003D2AB /* SpeciesListViewControllerDummy.swift */,
+			);
+			path = SpeciesListViewController;
+			sourceTree = "<group>";
+		};
+		586FB3D52A1033850003D2AB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D62A10338D0003D2AB /* Layer */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		586FB3D62A10338D0003D2AB /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D72A1033930003D2AB /* NetworkServiceProvider */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		586FB3D72A1033930003D2AB /* NetworkServiceProvider */ = {
+			isa = PBXGroup;
+			children = (
+				586FB3D82A1033A50003D2AB /* NetworkServiceProviderMock.swift */,
+			);
+			path = NetworkServiceProvider;
+			sourceTree = "<group>";
+		};
 		58A6D6542A0F3A5800902695 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +238,8 @@
 		58A6D65B2A0F3BDA00902695 /* onTopPokeTests */ = {
 			isa = PBXGroup;
 			children = (
-				58A6D65C2A0F3BDA00902695 /* onTopPokeTests.swift */,
+				586FB3CD2A1032870003D2AB /* Test Doubles */,
+				586FB3CE2A1032940003D2AB /* onTopPoke */,
 			);
 			path = onTopPokeTests;
 			sourceTree = "<group>";
@@ -308,7 +394,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58A6D65D2A0F3BDA00902695 /* onTopPokeTests.swift in Sources */,
+				586FB3D92A1033A50003D2AB /* NetworkServiceProviderMock.swift in Sources */,
+				586FB3CC2A1031190003D2AB /* SpeciesListPresenterTests.swift in Sources */,
+				586FB3D32A1032CE0003D2AB /* SpeciesListViewControllerDummy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
