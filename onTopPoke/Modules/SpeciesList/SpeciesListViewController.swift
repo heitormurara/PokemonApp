@@ -9,6 +9,7 @@ final class SpeciesListViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +62,7 @@ extension SpeciesListViewController: UITableViewDataSource {
         
         if let specie = presenter?.species[indexPath.row] {
             var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = specie.name
+            contentConfiguration.text = specie.name.capitalized
             contentConfiguration.image = specie.image
             cell.contentConfiguration = contentConfiguration
         }
@@ -79,6 +80,7 @@ extension SpeciesListViewController {
         setUpConstraints()
         
         view.backgroundColor = .systemBackground
+        title = "Pokémon Species"
     }
     
     private func setUpConstraints() {
