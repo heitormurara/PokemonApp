@@ -36,7 +36,15 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
 // MARK: - UITableViewDelegate
 
 extension SpeciesListViewController: UITableViewDelegate {
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+        
+        if contentOffset > contentHeight - frameHeight - 100 {
+            presenter?.getSpecies()
+        }
+    }
 }
 
 

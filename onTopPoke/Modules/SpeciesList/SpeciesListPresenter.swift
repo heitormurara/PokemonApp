@@ -9,6 +9,8 @@ protocol SpeciesListPresenting {
 final class SpeciesListPresenter {
     weak private var viewControllerDelegate: SpeciesListViewControllerDelegate?
     private let provider: NetworkServiceProviding
+    private var nextPage: Page? = Page(limit: 20, offset: 0)
+    private var isLoading: Bool = false
     
     var species: [PokemonSpecieListItem] = []
     
@@ -24,9 +26,16 @@ final class SpeciesListPresenter {
 
 extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
+        guard !isLoading else { return }
+        isLoading = true
+        
         getSpeciesList { [weak self] (result: PokemonSpeciesListResult) in
+            defer { self?.isLoading = false }
+            
             switch result {
             case let .success(paginatedResult):
+                self?.nextPage = paginatedResult.next
+                
                 self?.getImages(for: paginatedResult.results, completion: { species in
                     DispatchQueue.main.async { [weak self] in
                         self?.species.append(contentsOf: species)
@@ -44,7 +53,8 @@ extension SpeciesListPresenter: SpeciesListPresenting {
 
 extension SpeciesListPresenter {
     private func getSpeciesList(completion: @escaping (PokemonSpeciesListResult) -> Void) {
-        let service = PokemonService.getSpecies(limit: 20, offset: 0)
+        guard let nextPage = nextPage else { return }
+        let service = PokemonService.getSpecies(nextPage)
         provider.request(service, completion: completion)
     }
     
