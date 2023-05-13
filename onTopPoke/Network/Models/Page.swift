@@ -30,6 +30,11 @@ struct Page {
             throw error
         }
     }
+    
+    init(limit: Int, offset: Int) {
+        self.limit = limit
+        self.offset = offset
+    }
 }
 
 enum PaginationError: Error {
