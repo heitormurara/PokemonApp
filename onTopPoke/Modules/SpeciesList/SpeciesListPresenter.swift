@@ -30,15 +30,20 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         isLoading = true
         
         getSpeciesList { [weak self] (result: PokemonSpeciesListResult) in
-            defer { self?.isLoading = false }
+            DispatchQueue.main.async { [weak self] in
+                self?.viewControllerDelegate?.showFooterSpinnerView(true)
+            }
             
             switch result {
             case let .success(paginatedResult):
                 self?.nextPage = paginatedResult.next
                 
                 self?.getImages(for: paginatedResult.results, completion: { species in
+                    defer { self?.isLoading = false }
+                    
                     DispatchQueue.main.async { [weak self] in
                         self?.species.append(contentsOf: species)
+                        self?.viewControllerDelegate?.showFooterSpinnerView(false)
                         self?.viewControllerDelegate?.reloadData()
                     }
                 })

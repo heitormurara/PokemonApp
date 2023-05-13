@@ -2,6 +2,7 @@ import UIKit
 
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
+    func showFooterSpinnerView(_ isVisible: Bool)
 }
 
 final class SpeciesListViewController: UIViewController {
@@ -14,6 +15,15 @@ final class SpeciesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var footerSpinnerView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = view.center
+        view.addSubview(spinner)
+        spinner.startAnimating()
+        return view
     }()
     
     override func viewDidLoad() {
@@ -30,6 +40,10 @@ final class SpeciesListViewController: UIViewController {
 extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     func reloadData() {
         tableView.reloadData()
+    }
+    
+    func showFooterSpinnerView(_ isVisible: Bool) {
+        tableView.tableFooterView = isVisible ? footerSpinnerView : nil
     }
 }
 
