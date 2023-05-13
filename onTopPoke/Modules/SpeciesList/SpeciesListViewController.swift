@@ -54,6 +54,7 @@ extension SpeciesListViewController: UITableViewDataSource {
         if let specie = presenter?.species[indexPath.row] {
             var contentConfiguration = cell.defaultContentConfiguration()
             contentConfiguration.text = specie.name
+            contentConfiguration.image = specie.image
             cell.contentConfiguration = contentConfiguration
         }
         

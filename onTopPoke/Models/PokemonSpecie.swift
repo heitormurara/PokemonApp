@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 struct PokemonSpecieListItem: Decodable {
     let name: String
@@ -15,6 +15,8 @@ struct PokemonSpecieListItem: Decodable {
         }
         return nil
     }
+    
+    var image: UIImage?
     
     enum CodingKeys: CodingKey {
         case name
