@@ -31,3 +31,5 @@ extension PokemonService: NetworkService {
         }
     }
 }
+
+typealias PokemonSpeciesListResult = Result<PaginatedResult<PokemonSpecieListItem>, Error>
