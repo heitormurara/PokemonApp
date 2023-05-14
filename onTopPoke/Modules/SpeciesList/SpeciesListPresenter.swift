@@ -8,21 +8,23 @@ protocol SpeciesListPresenting {
 
 final class SpeciesListPresenter {
     weak private var viewControllerDelegate: SpeciesListViewControllerDelegate?
-    
     private let pokeAPIService: PokeAPIServicing
     private let pokemonService: PokemonServicing
     private var paginationManager: PaginationManaging
+    private let dispatcher: Dispatching
     
     var species: [PokemonSpecieListItem] = []
     
-    init(viewControllerDelegate: SpeciesListViewControllerDelegate? = nil,
+    init(viewControllerDelegate: SpeciesListViewControllerDelegate,
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
          pokemonService: PokemonServicing = PokemonService(),
-         paginationManager: PaginationManaging = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false)) {
+         paginationManager: PaginationManaging = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false),
+         dispatcher: Dispatching = DispatchQueue.main) {
         self.viewControllerDelegate = viewControllerDelegate
         self.pokeAPIService = pokeAPIService
         self.pokemonService = pokemonService
         self.paginationManager = paginationManager
+        self.dispatcher = dispatcher
     }
 }
 
@@ -51,7 +53,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
             guard let self = self else { return }
             defer { self.paginationManager.isLoading = false }
             
-            DispatchQueue.main.async {
+            dispatcher.async {
                 self.species.append(contentsOf: species)
                 self.viewControllerDelegate?.showFooterSpinnerView(false)
                 self.viewControllerDelegate?.reloadData()

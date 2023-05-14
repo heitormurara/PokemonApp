@@ -1,6 +1,6 @@
 @testable import onTopPoke
 
-final class PokeAPIDummy: PokeAPIServicing {
+final class PokeAPIServiceMock: PokeAPIServicing {
     var gotImages = false
     var getImagesCount = 0
     
