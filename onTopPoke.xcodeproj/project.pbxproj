@@ -281,14 +281,14 @@
 			path = SpeciesList;
 			sourceTree = "<group>";
 		};
-		586FB3CD2A1032870003D2AB /* Test Doubles */ = {
+		586FB3CD2A1032870003D2AB /* TestDoubles */ = {
 			isa = PBXGroup;
 			children = (
 				5815094A2A10A37900F4D3CE /* Models */,
 				586FB3D02A1032B70003D2AB /* Modules */,
 				586FB3D52A1033850003D2AB /* Network */,
 			);
-			path = "Test Doubles";
+			path = TestDoubles;
 			sourceTree = "<group>";
 		};
 		586FB3CE2A1032940003D2AB /* onTopPoke */ = {
@@ -375,7 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				581509472A10A30800F4D3CE /* Helpers */,
-				586FB3CD2A1032870003D2AB /* Test Doubles */,
+				586FB3CD2A1032870003D2AB /* TestDoubles */,
 				586FB3CE2A1032940003D2AB /* onTopPoke */,
 			);
 			path = onTopPokeTests;
