@@ -1,8 +1,8 @@
-enum PokemonService {
+enum PokemonRoute {
     case getSpecies(_ page: Page)
 }
 
-extension PokemonService: NetworkService {
+extension PokemonRoute: NetworkRoute {
     var baseURL: String {
         switch self {
         case .getSpecies:
@@ -31,5 +31,3 @@ extension PokemonService: NetworkService {
         }
     }
 }
-
-typealias PokemonSpeciesListResult = Result<PaginatedResult<PokemonSpecieListItem>, Error>

@@ -1,7 +1,7 @@
 import Foundation
 
 /// The protocol used to define the specifications needed for a `NetworkServiceProvider`
-protocol NetworkService {
+protocol NetworkRoute {
     /// The base `URL` for the Service
     var baseURL: String { get }
     
@@ -15,7 +15,7 @@ protocol NetworkService {
     var method: HTTPMethod { get }
 }
 
-extension NetworkService {
+extension NetworkRoute {
     /// The `URLRequest` for the Service
     var urlRequest: URLRequest {
         guard let url = url else {

@@ -1,10 +1,10 @@
 import Foundation
 
-enum PokeAPIService {
+enum PokeAPIRoute {
     case getImage(fromSpecieId: Int)
 }
 
-extension PokeAPIService: NetworkService {
+extension PokeAPIRoute: NetworkRoute {
     var baseURL: String {
         switch self {
         case .getImage:

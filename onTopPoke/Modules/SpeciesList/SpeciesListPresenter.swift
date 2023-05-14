@@ -8,16 +8,21 @@ protocol SpeciesListPresenting {
 
 final class SpeciesListPresenter {
     weak private var viewControllerDelegate: SpeciesListViewControllerDelegate?
-    private let provider: NetworkServiceProviding
+    
+    private let pokeAPIService: PokeAPIServicing
+    private let pokemonService: PokemonServicing
+    
     private var nextPage: Page? = Page(limit: 20, offset: 0)
     private var isLoading: Bool = false
     
     var species: [PokemonSpecieListItem] = []
     
     init(viewControllerDelegate: SpeciesListViewControllerDelegate? = nil,
-         provider: NetworkServiceProviding = NetworkServiceProvider()) {
+         pokeAPIService: PokeAPIServicing = PokeAPIService(),
+         pokemonService: PokemonServicing = PokemonService()) {
         self.viewControllerDelegate = viewControllerDelegate
-        self.provider = provider
+        self.pokeAPIService = pokeAPIService
+        self.pokemonService = pokemonService
     }
 }
 
@@ -26,71 +31,31 @@ final class SpeciesListPresenter {
 
 extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
-        guard !isLoading else { return }
+        guard !isLoading, let nextPage = nextPage else { return }
         isLoading = true
+        viewControllerDelegate?.showFooterSpinnerView(true)
         
-        getSpeciesList { [weak self] (result: PokemonSpeciesListResult) in
-            DispatchQueue.main.async { [weak self] in
-                self?.viewControllerDelegate?.showFooterSpinnerView(true)
-            }
-            
+        pokemonService.getSpecies(page: nextPage) { [weak self] (result: PokemonSpecieListItemPaginatedResult) in
             switch result {
             case let .success(paginatedResult):
                 self?.nextPage = paginatedResult.next
-                
-                self?.getImages(for: paginatedResult.results, completion: { species in
-                    defer { self?.isLoading = false }
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        self?.species.append(contentsOf: species)
-                        self?.viewControllerDelegate?.showFooterSpinnerView(false)
-                        self?.viewControllerDelegate?.reloadData()
-                    }
-                })
-            case .failure: break
+                self?.getImages(from: paginatedResult.results)
+            case .failure:
+                break
             }
         }
     }
-}
-
-
-// MARK: - Private API
-
-extension SpeciesListPresenter {
-    private func getSpeciesList(completion: @escaping (PokemonSpeciesListResult) -> Void) {
-        guard let nextPage = nextPage else { return }
-        let service = PokemonService.getSpecies(nextPage)
-        provider.request(service, completion: completion)
-    }
     
-    private func getImages(for species: [PokemonSpecieListItem], completion: @escaping ([PokemonSpecieListItem]) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        var updatedSpecies = [PokemonSpecieListItem]()
-        
-        species.forEach { [weak self] specie in
-            var updatedSpecie = specie
-            dispatchGroup.enter()
+    private func getImages(from species: [PokemonSpecieListItem]) {
+        pokeAPIService.getImages(for: species) { [weak self] species in
+            guard let self = self else { return }
+            defer { self.isLoading = false }
             
-            self?.getImage(for: specie, completion: { result in
-                defer { dispatchGroup.leave() }
-                
-                switch result {
-                case let .success(data):
-                    updatedSpecie.image = UIImage(data: data)
-                    updatedSpecies.append(updatedSpecie)
-                case .failure: break
-                }
-            })
+            DispatchQueue.main.async {
+                self.species.append(contentsOf: species)
+                self.viewControllerDelegate?.showFooterSpinnerView(false)
+                self.viewControllerDelegate?.reloadData()
+            }
         }
-        
-        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
-            completion(updatedSpecies)
-        }
-    }
-    
-    private func getImage(for specie: PokemonSpecieListItem, completion: @escaping (DataResult) -> Void) {
-        guard let specieId = specie.id else { return }
-        let service = PokeAPIService.getImage(fromSpecieId: specieId)
-        provider.requestData(service, completion: completion)
     }
 }
