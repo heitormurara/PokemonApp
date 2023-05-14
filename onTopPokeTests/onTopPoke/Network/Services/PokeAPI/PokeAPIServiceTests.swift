@@ -6,8 +6,8 @@ final class PokeAPIServiceTests: XCTestCase {
         let sut = PokeAPIService(networkProvider: NetworkProviderStub(),
                                  dispatchGroup: DispatchGroupStub())
         
-        let species: PokemonListItemList = JSONReader().getFromFile(named: "pokemonListItemList")
-        var updatedSpecies: PokemonListItemList?
+        let species: PokemonSpecieItemList = JSONReader().getFromFile(named: "pokemonSpecieItemList")
+        var updatedSpecies: PokemonSpecieItemList?
         
         let expectation = XCTestExpectation(description: "")
         

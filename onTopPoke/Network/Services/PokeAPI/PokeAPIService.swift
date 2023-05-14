@@ -1,10 +1,10 @@
 import UIKit
 
-typealias PokemonListItemList = [PokemonSpecieListItem]
+typealias PokemonSpecieItemList = [PokemonSpecieItem]
 
 protocol PokeAPIServicing {
-    func getImages(for species: [PokemonSpecieListItem],
-                   completion: @escaping (PokemonListItemList) -> Void)
+    func getImages(for species: [PokemonSpecieItem],
+                   completion: @escaping (PokemonSpecieItemList) -> Void)
     func getImage(fromSpecieId specieId: Int,
                   completion: @escaping (DataResult) -> Void)
 }
@@ -23,9 +23,9 @@ final class PokeAPIService {
 }
 
 extension PokeAPIService: PokeAPIServicing {
-    func getImages(for species: [PokemonSpecieListItem],
-                   completion: @escaping (PokemonListItemList) -> Void) {
-        var updatedSpecies = [PokemonSpecieListItem]()
+    func getImages(for species: [PokemonSpecieItem],
+                   completion: @escaping (PokemonSpecieItemList) -> Void) {
+        var updatedSpecies = [PokemonSpecieItem]()
         
         species.forEach { [weak self] specie in
             guard let specieId = specie.id, let self = self else { return }

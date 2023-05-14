@@ -7,8 +7,8 @@ final class PokeAPIServiceDummy: PokeAPIServicing {
     var gotImage = false
     var getImageCount = 0
     
-    func getImages(for species: [onTopPoke.PokemonSpecieListItem],
-                   completion: @escaping (onTopPoke.PokemonListItemList) -> Void) {
+    func getImages(for species: [onTopPoke.PokemonSpecieItem],
+                   completion: @escaping (onTopPoke.PokemonSpecieItemList) -> Void) {
         gotImages = true
         getImagesCount += 1
     }

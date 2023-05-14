@@ -1,8 +1,8 @@
-typealias PokemonSpecieListItemPaginatedResult = Result<PaginatedResult<PokemonSpecieListItem>, Error>
+typealias PokemonSpecieItemPaginatedResult = Result<PaginatedResult<PokemonSpecieItem>, Error>
 
 protocol PokemonServicing {
     func getSpecies(page: Page,
-                    completion: @escaping (PokemonSpecieListItemPaginatedResult) -> Void)
+                    completion: @escaping (PokemonSpecieItemPaginatedResult) -> Void)
 }
 
 final class PokemonService {
@@ -16,7 +16,7 @@ final class PokemonService {
 
 extension PokemonService: PokemonServicing {
     func getSpecies(page: Page,
-                    completion: @escaping (PokemonSpecieListItemPaginatedResult) -> Void) {
+                    completion: @escaping (PokemonSpecieItemPaginatedResult) -> Void) {
         networkProvider.request(networkRoute.getSpecies(page), completion: completion)
     }
 }

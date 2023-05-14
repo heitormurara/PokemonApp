@@ -3,8 +3,8 @@ import Foundation
 
 final class PokemonServiceStub: PokemonServicing {
     func getSpecies(page: onTopPoke.Page,
-                    completion: @escaping (onTopPoke.PokemonSpecieListItemPaginatedResult) -> Void) {
-        let decoded: PaginatedResult<PokemonSpecieListItem> = JSONReader().getFromFile(named: "getSpecies-valid")
+                    completion: @escaping (onTopPoke.PokemonSpecieItemPaginatedResult) -> Void) {
+        let decoded: PaginatedResult<PokemonSpecieItem> = JSONReader().getFromFile(named: "pokemonSpecieItemPaginatedResult")
         completion(.success(decoded))
     }
 }

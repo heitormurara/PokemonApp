@@ -2,5 +2,5 @@
 
 final class PokemonServiceDummy: PokemonServicing {
     func getSpecies(page: onTopPoke.Page,
-                    completion: @escaping (onTopPoke.PokemonSpecieListItemPaginatedResult) -> Void) {}
+                    completion: @escaping (onTopPoke.PokemonSpecieItemPaginatedResult) -> Void) {}
 }

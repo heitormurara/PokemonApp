@@ -3,14 +3,14 @@ import Foundation
 
 final class PokeAPIServiceStub: PokeAPIServicing {
     enum GetImagesResponses: String {
-        case successList = "pokemonListItemList"
+        case successList = "pokemonSpecieItemList"
     }
     
     var getImagesResponse = GetImagesResponses.successList
     
-    func getImages(for species: [onTopPoke.PokemonSpecieListItem],
-                   completion: @escaping (onTopPoke.PokemonListItemList) -> Void) {
-        let jsonResponse: PokemonListItemList = JSONReader().getFromFile(named: getImagesResponse.rawValue)
+    func getImages(for species: [onTopPoke.PokemonSpecieItem],
+                   completion: @escaping (onTopPoke.PokemonSpecieItemList) -> Void) {
+        let jsonResponse: PokemonSpecieItemList = JSONReader().getFromFile(named: getImagesResponse.rawValue)
         completion(jsonResponse)
     }
     
