@@ -12,6 +12,7 @@ protocol PokeAPIServicing {
 final class PokeAPIService {
     private let networkProvider: NetworkProviding
     private let networkRoute = PokeAPIRoute.self
+    var dispatchGroup: DispatchingGroup = DispatchGroup()
     
     init(networkProvider: NetworkProviding = NetworkProvider()) {
         self.networkProvider = networkProvider

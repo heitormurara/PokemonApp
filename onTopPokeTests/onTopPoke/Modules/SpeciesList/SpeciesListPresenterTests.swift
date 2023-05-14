@@ -46,7 +46,17 @@ final class SpeciesListPresenterTests: XCTestCase {
         XCTAssertTrue(paginationManagerMock.isLoading, "getSpecies should set PaginationManaging.isLoading to true when not loading and next page exists.")
     }
     
-    // test if sets spinner view
+    func test_getSpecies_whenNotLoading_whenNextPage_displaysFooterSpinner() {
+        let viewControllerMock = SpeciesListViewControllerMock()
+        let sut = SpeciesListPresenter(viewControllerDelegate: viewControllerMock,
+                                       pokeAPIService: PokeAPIServiceDummy(),
+                                       pokemonService: PokemonServiceDummy(),
+                                       dispatcher: DispatcherStub())
+        sut.getSpecies()
+        
+        XCTAssertTrue(viewControllerMock.setFooterSpinnerVisibility, "getImages should set footer spinner visibility.")
+        XCTAssertTrue(viewControllerMock.isFooterSpinnerViewVisible, "getImages should set PaginationManaging.isLoading to true.")
+    }
     
     func test_getSpecies_whenNilNextPage_doesntRequestFromService() {
         let pokemonServiceMock = PokemonServiceMock()
@@ -112,7 +122,7 @@ final class SpeciesListPresenterTests: XCTestCase {
         XCTAssertNotEqual(speciesBeforeCall.count, speciesAfterCall.count, "getImages should update Presenter's species when receives new species on completion.")
     }
     
-    func test_getImages_onResult_removesFooterSpinner() {
+    func test_getImages_onResult_hidesFooterSpinner() {
         let viewControllerMock = SpeciesListViewControllerMock()
         let sut = SpeciesListPresenter(viewControllerDelegate: viewControllerMock,
                                        pokeAPIService: PokeAPIServiceStub(),
