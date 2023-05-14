@@ -40,6 +40,7 @@
 		58B349192A1155B10023798E /* PokeAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B349182A1155B00023798E /* PokeAPIServiceTests.swift */; };
 		58B3491B2A11622C0023798E /* PokemonServiceDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B3491A2A11622C0023798E /* PokemonServiceDummy.swift */; };
 		58FC503E2A116C7000CBCA79 /* DispatchGroupStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC503D2A116C7000CBCA79 /* DispatchGroupStub.swift */; };
+		58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC503F2A116F0800CBCA79 /* DispatchingGroup.swift */; };
 		710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710FC2F92A02DBA000899EA2 /* AppDelegate.swift */; };
 		710FC2FC2A02DBA000899EA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710FC2FB2A02DBA000899EA2 /* SceneDelegate.swift */; };
 		710FC3032A02DBA100899EA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 710FC3022A02DBA100899EA2 /* Assets.xcassets */; };
@@ -92,6 +93,7 @@
 		58B349182A1155B00023798E /* PokeAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPIServiceTests.swift; sourceTree = "<group>"; };
 		58B3491A2A11622C0023798E /* PokemonServiceDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceDummy.swift; sourceTree = "<group>"; };
 		58FC503D2A116C7000CBCA79 /* DispatchGroupStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchGroupStub.swift; sourceTree = "<group>"; };
+		58FC503F2A116F0800CBCA79 /* DispatchingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchingGroup.swift; sourceTree = "<group>"; };
 		710FC2F62A02DBA000899EA2 /* onTopPoke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = onTopPoke.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		710FC2F92A02DBA000899EA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		710FC2FB2A02DBA000899EA2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				586FB3BB2A0FE1C60003D2AB /* PokemonSpecie.swift */,
 				581509402A109C3200F4D3CE /* PaginationManager.swift */,
 				581509512A1124D700F4D3CE /* Dispatching.swift */,
+				58FC503F2A116F0800CBCA79 /* DispatchingGroup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				581509522A1124D700F4D3CE /* Dispatching.swift in Sources */,
 				586FB3BC2A0FE1C60003D2AB /* PokemonSpecie.swift in Sources */,
 				586FB3C72A1021200003D2AB /* Page.swift in Sources */,
+				58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */,
 				586FB3B92A0FE1950003D2AB /* PokemonRoute.swift in Sources */,
 				710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */,
 				586FB3B12A0F42BE0003D2AB /* NetworkProvider.swift in Sources */,
