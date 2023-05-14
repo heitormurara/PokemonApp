@@ -1,10 +1,7 @@
-import UIKit
-
 protocol SpeciesListPresenting {
     var species: [PokemonSpecieItem] { get }
     func getSpecies()
 }
-
 
 final class SpeciesListPresenter {
     weak private var viewControllerDelegate: SpeciesListViewControllerDelegate?
@@ -19,7 +16,7 @@ final class SpeciesListPresenter {
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
          pokemonService: PokemonServicing = PokemonService(),
          paginationManager: PaginationManaging = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false),
-         dispatcher: Dispatching = DispatchQueue.main) {
+         dispatcher: Dispatching) {
         self.viewControllerDelegate = viewControllerDelegate
         self.pokeAPIService = pokeAPIService
         self.pokemonService = pokemonService

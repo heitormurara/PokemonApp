@@ -29,7 +29,7 @@ final class SpeciesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        presenter = SpeciesListPresenter(viewControllerDelegate: self)
+        presenter = SpeciesListPresenter(viewControllerDelegate: self, dispatcher: DispatchQueue.main)
         presenter?.getSpecies()
     }
 }
