@@ -16,20 +16,10 @@ protocol NetworkRoute {
 }
 
 extension NetworkRoute {
-    /// The `URLRequest` for the Service
-    var urlRequest: URLRequest {
-        guard let url = url else {
-            preconditionFailure("Missing URL for Service: \(self)")
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-        
-        return request
-    }
-    
     /// Complete `URL` with `baseURL`, `path` and `parameters` (if existent)
-    private var url: URL? {
+    var url: URL? {
+        if baseURL.isEmpty || path.isEmpty { return nil }
+        
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.path = path
         
@@ -38,6 +28,16 @@ extension NetworkRoute {
         }
         
         return urlComponents?.url
+    }
+    
+    /// The `URLRequest` for the Service
+    var urlRequest: URLRequest? {
+        guard let url = url else { return nil }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        
+        return request
     }
 }
 

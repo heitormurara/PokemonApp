@@ -4,6 +4,7 @@ typealias DataResult = Result<Data, Error>
 
 enum NetworkProviderError: Error {
     case emptyData
+    case emptyURLRequest
 }
 
 protocol NetworkProviding {
@@ -42,7 +43,12 @@ extension NetworkProvider: NetworkProviding {
     
     func requestData(_ service: NetworkRoute,
                      completion: @escaping (Result<Data, Error>) -> Void) {
-        urlSession.dataTask(with: service.urlRequest) { (data, _, error) in
+        guard let urlRequest = service.urlRequest else {
+            completion(.failure(NetworkProviderError.emptyURLRequest))
+            return
+        }
+        
+        urlSession.dataTask(with: urlRequest) { (data, _, error) in
             if let error = error {
                 completion(.failure(error))
                 return
