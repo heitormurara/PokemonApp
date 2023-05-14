@@ -1,5 +1,11 @@
 import Foundation
 
+enum PaginationError: Error {
+    case invalidLimit
+    case invalidOffset
+    case noExactMatchesToRegex
+}
+
 struct Page {
     let limit: Int
     let offset: Int
@@ -35,10 +41,4 @@ struct Page {
         self.limit = limit
         self.offset = offset
     }
-}
-
-enum PaginationError: Error {
-    case invalidLimit
-    case invalidOffset
-    case noExactMatchesToRegex
 }

@@ -166,7 +166,6 @@
 		581509382A1099C800F4D3CE /* Pokemon */ = {
 			isa = PBXGroup;
 			children = (
-				581509442A10A02E00F4D3CE /* JSONs */,
 				581509502A1121C300F4D3CE /* PokemonService */,
 			);
 			path = Pokemon;
@@ -199,10 +198,10 @@
 		5815094A2A10A37900F4D3CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				58EFAB2A2A11880E00C09FC0 /* PaginationManager */,
+				58EFAB292A11880700C09FC0 /* Dispatching */,
+				58EFAB282A1187FB00C09FC0 /* DispatchingGroup */,
 				581509562A113D8E00F4D3CE /* JSONs */,
-				5815094B2A10A38300F4D3CE /* PaginationManagerMock.swift */,
-				58B3490F2A114F580023798E /* DispatcherStub.swift */,
-				58FC503D2A116C7000CBCA79 /* DispatchGroupStub.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,6 +222,7 @@
 				5815093B2A1099EB00F4D3CE /* PokemonServiceMock.swift */,
 				581509422A109FFC00F4D3CE /* PokemonServiceStub.swift */,
 				58B3491A2A11622C0023798E /* PokemonServiceDummy.swift */,
+				581509442A10A02E00F4D3CE /* JSONs */,
 			);
 			path = PokemonService;
 			sourceTree = "<group>";
@@ -303,17 +303,17 @@
 		586FB3D02A1032B70003D2AB /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				586FB3D12A1032BE0003D2AB /* Species List */,
+				586FB3D12A1032BE0003D2AB /* SpeciesList */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		586FB3D12A1032BE0003D2AB /* Species List */ = {
+		586FB3D12A1032BE0003D2AB /* SpeciesList */ = {
 			isa = PBXGroup;
 			children = (
 				586FB3D42A10331B0003D2AB /* SpeciesListViewController */,
 			);
-			path = "Species List";
+			path = SpeciesList;
 			sourceTree = "<group>";
 		};
 		586FB3D42A10331B0003D2AB /* SpeciesListViewController */ = {
@@ -408,11 +408,35 @@
 			path = PokeAPI;
 			sourceTree = "<group>";
 		};
+		58EFAB282A1187FB00C09FC0 /* DispatchingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				58FC503D2A116C7000CBCA79 /* DispatchGroupStub.swift */,
+			);
+			path = DispatchingGroup;
+			sourceTree = "<group>";
+		};
+		58EFAB292A11880700C09FC0 /* Dispatching */ = {
+			isa = PBXGroup;
+			children = (
+				58B3490F2A114F580023798E /* DispatcherStub.swift */,
+			);
+			path = Dispatching;
+			sourceTree = "<group>";
+		};
+		58EFAB2A2A11880E00C09FC0 /* PaginationManager */ = {
+			isa = PBXGroup;
+			children = (
+				5815094B2A10A38300F4D3CE /* PaginationManagerMock.swift */,
+			);
+			path = PaginationManager;
+			sourceTree = "<group>";
+		};
 		58FC50432A11712400CBCA79 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				58FC50442A11713700CBCA79 /* Layer */,
 				58B349112A1152CF0023798E /* Services */,
+				58FC50442A11713700CBCA79 /* Layer */,
 			);
 			path = Network;
 			sourceTree = "<group>";
