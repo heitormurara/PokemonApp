@@ -11,27 +11,29 @@ protocol PokeAPIServicing {
 
 final class PokeAPIService {
     private let networkProvider: NetworkProviding
-    private let networkRoute = PokeAPIRoute.self
-    var dispatchGroup: DispatchingGroup = DispatchGroup()
+    private let dispatchGroup: DispatchingGroup
     
-    init(networkProvider: NetworkProviding = NetworkProvider()) {
+    private let networkRoute = PokeAPIRoute.self
+    
+    init(networkProvider: NetworkProviding = NetworkProvider(),
+         dispatchGroup: DispatchingGroup = DispatchGroup()) {
         self.networkProvider = networkProvider
+        self.dispatchGroup = dispatchGroup
     }
 }
 
 extension PokeAPIService: PokeAPIServicing {
     func getImages(for species: [PokemonSpecieListItem],
                    completion: @escaping (PokemonListItemList) -> Void) {
-        let dispatchGroup = DispatchGroup()
         var updatedSpecies = [PokemonSpecieListItem]()
         
         species.forEach { [weak self] specie in
-            guard let specieId = specie.id else { return }
+            guard let specieId = specie.id, let self = self else { return }
             var updatedSpecie = specie
-            dispatchGroup.enter()
+            self.dispatchGroup.enter()
             
-            self?.getImage(fromSpecieId: specieId, completion: { result in
-                defer { dispatchGroup.leave() }
+            self.getImage(fromSpecieId: specieId, completion: { result in
+                defer { self.dispatchGroup.leave() }
                 
                 switch result {
                 case let .success(data):
@@ -42,7 +44,7 @@ extension PokeAPIService: PokeAPIServicing {
             })
         }
         
-        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+        dispatchGroup.notify(on: .global(qos: .userInitiated)) {
             completion(updatedSpecies)
         }
     }

@@ -1,12 +1,14 @@
 import Foundation
 
 protocol DispatchingGroup {
-    func notify(queue: DispatchQueue,
-                _ work: @escaping () -> Void)
+    func enter()
+    func leave()
+    func notify(on queue: DispatchQueue,
+                execute work: @escaping () -> Void)
 }
 
 extension DispatchGroup: DispatchingGroup {
-    func notify(queue: DispatchQueue, _ work: @escaping () -> Void) {
+    func notify(on queue: DispatchQueue, execute work: @escaping () -> Void) {
         self.notify(queue: queue, execute: work)
     }
 }

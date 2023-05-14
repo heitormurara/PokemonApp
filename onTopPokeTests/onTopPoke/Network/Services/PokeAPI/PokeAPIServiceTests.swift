@@ -3,8 +3,8 @@ import XCTest
 
 final class PokeAPIServiceTests: XCTestCase {
     func test_getImages_onProviderSuccess_completesWithUpdatesSpecies() {
-        let sut = PokeAPIService(networkProvider: NetworkProviderStub())
-        sut.dispatchGroup = DispatchGroupStub()
+        let sut = PokeAPIService(networkProvider: NetworkProviderStub(),
+                                 dispatchGroup: DispatchGroupStub())
         
         let species: PokemonListItemList = JSONReader().getFromFile(named: "pokemonListItemList")
         var updatedSpecies: PokemonListItemList?
@@ -22,14 +22,16 @@ final class PokeAPIServiceTests: XCTestCase {
     
     func test_getImage_requestsFromProvider() {
         let networkProviderMock = NetworkProviderMock()
-        let sut = PokeAPIService(networkProvider: networkProviderMock)
+        let sut = PokeAPIService(networkProvider: networkProviderMock,
+                                 dispatchGroup: DispatchGroupStub())
         sut.getImage(fromSpecieId: 1) { _ in }
         
         XCTAssertTrue(networkProviderMock.hasRequestedData, "getImage should request from NetworkProvider.")
     }
     
     func test_getImage_completes() {
-        let sut = PokeAPIService(networkProvider: NetworkProviderStub())
+        let sut = PokeAPIService(networkProvider: NetworkProviderStub(),
+                                 dispatchGroup: DispatchGroupStub())
         let expectation = XCTestExpectation(description: "getImage should complete on NetworkProvider completion.")
         
         sut.getImage(fromSpecieId: 1) { _ in
