@@ -1,6 +1,9 @@
+import Foundation
+
 protocol SpeciesListPresenting {
     var species: [PokemonSpecieItem] { get }
     func getSpecies()
+    func displayDetails(forSpecieAt indexPath: IndexPath)
 }
 
 final class SpeciesListPresenter {
@@ -56,5 +59,13 @@ extension SpeciesListPresenter: SpeciesListPresenting {
                 self.viewControllerDelegate?.reloadData()
             }
         }
+    }
+    
+    func displayDetails(forSpecieAt indexPath: IndexPath) {
+        let specie = species[indexPath.row]
+        let presenter = SpecieDetailsPresenter(specieItem: specie, dispatcher: DispatchQueue.main)
+        let viewController = SpecieDetailsViewController(presenter: presenter)
+        presenter.viewControllerDelegate = viewController
+        viewControllerDelegate?.pushViewController(viewController)
     }
 }

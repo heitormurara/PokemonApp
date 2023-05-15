@@ -3,6 +3,7 @@ import UIKit
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
     func showFooterSpinnerView(_ isVisible: Bool)
+    func pushViewController(_ viewController: UIViewController)
 }
 
 final class SpeciesListViewController: UIViewController {
@@ -19,6 +20,7 @@ final class SpeciesListViewController: UIViewController {
     
     private lazy var footerSpinnerView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        view.translatesAutoresizingMaskIntoConstraints = false
         let spinner = UIActivityIndicatorView()
         spinner.center = view.center
         view.addSubview(spinner)
@@ -45,6 +47,10 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     func showFooterSpinnerView(_ isVisible: Bool) {
         tableView.tableFooterView = isVisible ? footerSpinnerView : nil
     }
+    
+    func pushViewController(_ viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 
@@ -59,6 +65,10 @@ extension SpeciesListViewController: UITableViewDelegate {
         if contentOffset > contentHeight - frameHeight - 100 {
             presenter?.getSpecies()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter?.displayDetails(forSpecieAt: indexPath)
     }
 }
 
