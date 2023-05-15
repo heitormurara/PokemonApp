@@ -19,6 +19,7 @@ final class SpecieDetailsViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.dataSource = self
+        tableView.tableHeaderView = tableHeaderView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -79,8 +80,6 @@ extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
     func display() {
         title = presenter.specie.name.capitalized
         imageView.image = presenter.specie.image
-        
-        tableView.tableHeaderView = tableHeaderView
         tableView.reloadData()
     }
     
