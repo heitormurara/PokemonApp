@@ -9,8 +9,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_whenLoading_doesntRequestFromService() {
         let pokemonServiceMock = PokemonServiceMock()
         let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: true)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
                                        paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
@@ -22,8 +21,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_whenNotLoading_whenNextPage_requestsFromService() {
         let pokemonServiceMock = PokemonServiceMock()
         let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
                                        paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
@@ -35,8 +33,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_whenNotLoading_whenNextPage_setsLoading() {
         let pokemonServiceStub = PokemonServiceStub()
         let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceStub,
                                        paginationManager: paginationManagerMock,
                                        dispatcher: DispatcherStub())
@@ -47,11 +44,11 @@ final class SpeciesListPresenterTests: XCTestCase {
     }
     
     func test_getSpecies_whenNotLoading_whenNextPage_displaysFooterSpinner() {
-        let viewControllerMock = SpeciesListViewControllerMock()
-        let sut = SpeciesListPresenter(viewControllerDelegate: viewControllerMock,
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: PokemonServiceDummy(),
                                        dispatcher: DispatcherStub())
+        let viewControllerMock = SpeciesListViewControllerMock()
+        sut.viewControllerDelegate = viewControllerMock
         sut.getSpecies()
         
         XCTAssertTrue(viewControllerMock.setFooterSpinnerVisibility, "getImages should set footer spinner visibility.")
@@ -61,8 +58,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_whenNilNextPage_doesntRequestFromService() {
         let pokemonServiceMock = PokemonServiceMock()
         let paginationManager = PaginationManager(nextPage: nil, isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
                                        paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
@@ -74,8 +70,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_onServiceSuccess_updatesNextPage() {
         let pokemonServiceStub = PokemonServiceStub()
         let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceDummy(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceStub,
                                        paginationManager: paginationManagerMock,
                                        dispatcher: DispatcherStub())
@@ -87,8 +82,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     func test_getSpecies_onServiceSuccess_requestsImages() {
         let pokeAPIServiceMock = PokeAPIServiceMock()
         let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: pokeAPIServiceMock,
+        let sut = SpeciesListPresenter(pokeAPIService: pokeAPIServiceMock,
                                        pokemonService: PokemonServiceStub(),
                                        paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
@@ -99,8 +93,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getImages_onDefer_disablesLoading() {
         let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceStub(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceStub(),
                                        pokemonService: PokemonServiceStub(),
                                        paginationManager: paginationManagerMock,
                                        dispatcher: DispatcherStub())
@@ -111,8 +104,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     }
     
     func test_getImages_onResult_appendsSpecies() {
-        let sut = SpeciesListPresenter(viewControllerDelegate: SpeciesListViewControllerDummy(),
-                                       pokeAPIService: PokeAPIServiceStub(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceStub(),
                                        pokemonService: PokemonServiceStub(),
                                        dispatcher: DispatcherStub())
         let speciesBeforeCall = sut.species
@@ -123,11 +115,11 @@ final class SpeciesListPresenterTests: XCTestCase {
     }
     
     func test_getImages_onResult_hidesFooterSpinner() {
-        let viewControllerMock = SpeciesListViewControllerMock()
-        let sut = SpeciesListPresenter(viewControllerDelegate: viewControllerMock,
-                                       pokeAPIService: PokeAPIServiceStub(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceStub(),
                                        pokemonService: PokemonServiceStub(),
                                        dispatcher: DispatcherStub())
+        let viewControllerMock = SpeciesListViewControllerMock()
+        sut.viewControllerDelegate = viewControllerMock
         sut.getSpecies()
         
         XCTAssertTrue(viewControllerMock.setFooterSpinnerVisibility, "getImages should set footer spinner visibility on completion.")
@@ -135,11 +127,11 @@ final class SpeciesListPresenterTests: XCTestCase {
     }
     
     func test_getImages_onResult_reloadsData() {
-        let viewControllerMock = SpeciesListViewControllerMock()
-        let sut = SpeciesListPresenter(viewControllerDelegate: viewControllerMock,
-                                       pokeAPIService: PokeAPIServiceStub(),
+        let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceStub(),
                                        pokemonService: PokemonServiceStub(),
                                        dispatcher: DispatcherStub())
+        let viewControllerMock = SpeciesListViewControllerMock()
+        sut.viewControllerDelegate = viewControllerMock
         sut.getSpecies()
         
         XCTAssertTrue(viewControllerMock.reloadedData, "getImages should reload ViewController data on completion.")

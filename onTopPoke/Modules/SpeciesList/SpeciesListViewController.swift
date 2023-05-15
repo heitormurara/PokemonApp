@@ -7,7 +7,7 @@ protocol SpeciesListViewControllerDelegate: AnyObject {
 }
 
 final class SpeciesListViewController: UIViewController {
-    var presenter: SpeciesListPresenting?
+    let presenter: SpeciesListPresenting
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -28,11 +28,19 @@ final class SpeciesListViewController: UIViewController {
         return view
     }()
     
+    init(presenter: SpeciesListPresenting) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        presenter = SpeciesListPresenter(viewControllerDelegate: self, dispatcher: DispatchQueue.main)
-        presenter?.getSpecies()
+        presenter.getSpecies()
     }
 }
 
@@ -63,12 +71,12 @@ extension SpeciesListViewController: UITableViewDelegate {
         let frameHeight = scrollView.frame.size.height
         
         if contentOffset > contentHeight - frameHeight - 100 {
-            presenter?.getSpecies()
+            presenter.getSpecies()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter?.displayDetails(forSpecieAt: indexPath)
+        presenter.displayDetails(ofSpecieAt: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -78,19 +86,17 @@ extension SpeciesListViewController: UITableViewDelegate {
 
 extension SpeciesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let species = presenter?.species else { return 0 }
-        return species.count
+        return presenter.species.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "SpeciesListCell")
         
-        if let specie = presenter?.species[indexPath.row] {
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = specie.name.capitalized
-            contentConfiguration.image = specie.image
-            cell.contentConfiguration = contentConfiguration
-        }
+        let specie = presenter.species[indexPath.row]
+        var contentConfiguration = cell.defaultContentConfiguration()
+        contentConfiguration.text = specie.name.capitalized
+        contentConfiguration.image = specie.image
+        cell.contentConfiguration = contentConfiguration
         
         return cell
     }

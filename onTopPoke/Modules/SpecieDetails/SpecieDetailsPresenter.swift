@@ -14,11 +14,11 @@ final class SpecieDetailsPresenter {
     let specie: Specie
     private(set) var specieChain: [Specie]?
     
-    init(specieItem: Specie,
+    init(specie: Specie,
          pokemonService: PokemonServicing = PokemonService(),
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
          dispatcher: Dispatching) {
-        self.specie = specieItem
+        self.specie = specie
         self.pokemonService = pokemonService
         self.pokeAPIService = pokeAPIService
         self.dispatcher = dispatcher

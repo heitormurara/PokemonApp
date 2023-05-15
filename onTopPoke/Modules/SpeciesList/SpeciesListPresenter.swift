@@ -3,24 +3,25 @@ import Foundation
 protocol SpeciesListPresenting {
     var species: [Specie] { get }
     func getSpecies()
-    func displayDetails(forSpecieAt indexPath: IndexPath)
+    func displayDetails(ofSpecieAt indexPath: IndexPath)
 }
 
 final class SpeciesListPresenter {
-    weak private var viewControllerDelegate: SpeciesListViewControllerDelegate?
+    weak var viewControllerDelegate: SpeciesListViewControllerDelegate?
+    var coordinator: SpeciesListCoordinating?
+    
     private let pokeAPIService: PokeAPIServicing
     private let pokemonService: PokemonServicing
+    
     private var paginationManager: PaginationManaging
     private let dispatcher: Dispatching
     
     var species: [Specie] = []
     
-    init(viewControllerDelegate: SpeciesListViewControllerDelegate,
-         pokeAPIService: PokeAPIServicing = PokeAPIService(),
+    init(pokeAPIService: PokeAPIServicing = PokeAPIService(),
          pokemonService: PokemonServicing = PokemonService(),
          paginationManager: PaginationManaging = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false),
          dispatcher: Dispatching) {
-        self.viewControllerDelegate = viewControllerDelegate
         self.pokeAPIService = pokeAPIService
         self.pokemonService = pokemonService
         self.paginationManager = paginationManager
@@ -61,11 +62,8 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         }
     }
     
-    func displayDetails(forSpecieAt indexPath: IndexPath) {
+    func displayDetails(ofSpecieAt indexPath: IndexPath) {
         let specie = species[indexPath.row]
-        let presenter = SpecieDetailsPresenter(specieItem: specie, dispatcher: DispatchQueue.main)
-        let viewController = SpecieDetailsViewController(presenter: presenter)
-        presenter.viewControllerDelegate = viewController
-        viewControllerDelegate?.pushViewController(viewController)
+        coordinator?.displayDetails(of: specie)
     }
 }
