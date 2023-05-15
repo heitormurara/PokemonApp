@@ -1,14 +1,15 @@
 import UIKit
 
 protocol SpecieDetailsViewControllerDelegate: AnyObject {
-    func reloadData()
+    func display()
+    func displayLoading(_ isVisible: Bool)
 }
 
 final class SpecieDetailsViewController: UIViewController {
     let presenter: SpecieDetailsPresenting
     
     private lazy var imageView: UIImageView = {
-        let view = UIImageView(image: presenter.specie.image)
+        let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -41,6 +42,20 @@ final class SpecieDetailsViewController: UIViewController {
         return view
     }()
     
+    private lazy var loadingView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityIndicatorView.color = .systemGray
+        
+        view.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicatorView
+    }()
+    
     init(presenter: SpecieDetailsPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -61,8 +76,16 @@ final class SpecieDetailsViewController: UIViewController {
 // MARK: - SpecieDetailsViewControllerDelegate
 
 extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
-    func reloadData() {
+    func display() {
+        title = presenter.specie.name.capitalized
+        imageView.image = presenter.specie.image
+        
+        tableView.tableHeaderView = tableHeaderView
         tableView.reloadData()
+    }
+    
+    func displayLoading(_ isVisible: Bool) {
+        isVisible ? loadingView.startAnimating() : loadingView.stopAnimating()
     }
 }
 
@@ -96,8 +119,6 @@ extension SpecieDetailsViewController {
         setUpConstraints()
         
         view.backgroundColor = .systemBackground
-        title = presenter.specie.name.capitalized
-        tableView.tableHeaderView = tableHeaderView
     }
     
     private func setUpConstraints() {

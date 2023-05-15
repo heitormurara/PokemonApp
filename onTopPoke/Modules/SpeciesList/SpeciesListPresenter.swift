@@ -40,7 +40,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
         guard !loadManager.isLoading, let nextPage = paginationManager.nextPage else { return }
         loadManager.isLoading = true
-        viewControllerDelegate?.showFooterSpinnerView(true)
+        viewControllerDelegate?.displayFooterSpinner(true)
         
         pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
             switch result {
@@ -60,7 +60,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
             
             dispatcher.async {
                 self.species.append(contentsOf: species)
-                self.viewControllerDelegate?.showFooterSpinnerView(false)
+                self.viewControllerDelegate?.displayFooterSpinner(false)
                 self.viewControllerDelegate?.reloadData()
             }
         }

@@ -11,16 +11,20 @@ final class SpecieDetailsPresenter {
     private let pokeAPIService: PokeAPIServicing
     private let dispatcher: Dispatching
     
+    private var loadManager: LoadManaging
+    
     let specie: Specie
     private(set) var specieChain: [Specie]?
     
     init(specie: Specie,
          pokemonService: PokemonServicing = PokemonService(),
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
+         loadManager: LoadManaging = LoadManager(isLoading: false),
          dispatcher: Dispatching) {
         self.specie = specie
         self.pokemonService = pokemonService
         self.pokeAPIService = pokeAPIService
+        self.loadManager = loadManager
         self.dispatcher = dispatcher
     }
 }
@@ -30,7 +34,9 @@ final class SpecieDetailsPresenter {
 
 extension SpecieDetailsPresenter: SpecieDetailsPresenting {
     func getDetails() {
-        guard let specieId = specie.id else { return }
+        guard !loadManager.isLoading, let specieId = specie.id else { return }
+        loadManager.isLoading = true
+        viewControllerDelegate?.displayLoading(true)
         
         pokemonService.getSpecie(fromSpecieId: specieId) { [weak self] result in
             guard let self = self else { return }
@@ -59,10 +65,12 @@ extension SpecieDetailsPresenter: SpecieDetailsPresenting {
     private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
+            defer { self.loadManager.isLoading = false }
             self.specieChain = species
             
             dispatcher.async {
-                self.viewControllerDelegate?.reloadData()
+                self.viewControllerDelegate?.displayLoading(false)
+                self.viewControllerDelegate?.display()
             }
         }
     }

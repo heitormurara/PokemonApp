@@ -4,7 +4,7 @@ import UIKit
 final class SpeciesListViewControllerDummy: SpeciesListViewControllerDelegate {
     func reloadData() {}
     
-    func showFooterSpinnerView(_ isVisible: Bool) {}
+    func displayFooterSpinner(_ isVisible: Bool) {}
     
     func pushViewController(_ viewController: UIViewController) {}
 }

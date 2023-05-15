@@ -10,7 +10,7 @@ final class SpeciesListViewControllerMock: SpeciesListViewControllerDelegate {
         reloadedData = true
     }
     
-    func showFooterSpinnerView(_ isVisible: Bool) {
+    func displayFooterSpinner(_ isVisible: Bool) {
         setFooterSpinnerVisibility = true
         isFooterSpinnerViewVisible = isVisible
     }

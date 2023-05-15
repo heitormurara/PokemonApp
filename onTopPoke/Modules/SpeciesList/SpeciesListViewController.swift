@@ -2,7 +2,7 @@ import UIKit
 
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
-    func showFooterSpinnerView(_ isVisible: Bool)
+    func displayFooterSpinner(_ isVisible: Bool)
     func pushViewController(_ viewController: UIViewController)
 }
 
@@ -52,7 +52,7 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
         tableView.reloadData()
     }
     
-    func showFooterSpinnerView(_ isVisible: Bool) {
+    func displayFooterSpinner(_ isVisible: Bool) {
         tableView.tableFooterView = isVisible ? footerSpinnerView : nil
     }
     
