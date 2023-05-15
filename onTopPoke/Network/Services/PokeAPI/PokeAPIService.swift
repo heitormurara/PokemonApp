@@ -38,9 +38,10 @@ extension PokeAPIService: PokeAPIServicing {
                 switch result {
                 case let .success(data):
                     updatedSpecie.image = UIImage(data: data)
-                    updatedSpecies.append(updatedSpecie)
                 case .failure: break
                 }
+                
+                updatedSpecies.append(updatedSpecie)
             })
         }
         

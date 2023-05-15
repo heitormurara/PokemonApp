@@ -41,7 +41,11 @@ extension SpecieDetailsPresenter: SpecieDetailsPresenting {
             case let .success(specieDetails):
                 guard let evolutionChainId = specieDetails.evolutionChainId else { return }
                 self.getEvolutionChain(fromChainId: evolutionChainId)
-            case .failure: break
+            case .failure:
+                dispatcher.async {
+                    self.stopLoading()
+                    self.viewControllerDelegate?.displayError()
+                }
             }
         }
     }

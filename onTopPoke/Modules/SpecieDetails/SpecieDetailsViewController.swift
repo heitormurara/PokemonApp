@@ -3,6 +3,7 @@ import UIKit
 protocol SpecieDetailsViewControllerDelegate: AnyObject {
     func display()
     func displayLoading(_ isVisible: Bool)
+    func displayError()
 }
 
 final class SpecieDetailsViewController: UIViewController {
@@ -57,6 +58,18 @@ final class SpecieDetailsViewController: UIViewController {
         return activityIndicatorView
     }()
     
+    private lazy var errorView: RetriableErrorView = {
+        let errorView = RetriableErrorView()
+        let errorModel = RetriableErrorModel(image: .defaultError, text: "An issue ocurred while loading Pokémon Species.") { [weak self] in
+            self?.errorView.isHidden = true
+            self?.presenter.getDetails()
+        }
+        errorView.isHidden = true
+        errorView.configure(with: errorModel)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        return errorView
+    }()
+    
     init(presenter: SpecieDetailsPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -78,6 +91,9 @@ final class SpecieDetailsViewController: UIViewController {
 
 extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
     func display() {
+        tableView.isHidden = false
+        errorView.isHidden = true
+        
         title = presenter.specie.name.capitalized
         imageView.image = presenter.specie.image
         tableView.reloadData()
@@ -85,6 +101,11 @@ extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
     
     func displayLoading(_ isVisible: Bool) {
         isVisible ? loadingView.startAnimating() : loadingView.stopAnimating()
+    }
+    
+    func displayError() {
+        tableView.isHidden = true
+        errorView.isHidden = false
     }
 }
 
@@ -123,6 +144,7 @@ extension SpecieDetailsViewController {
     private func setUpConstraints() {
         view.addSubview(imageView)
         view.addSubview(tableView)
+        view.addSubview(errorView)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
@@ -131,7 +153,12 @@ extension SpecieDetailsViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            errorView.topAnchor.constraint(equalTo: view.topAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
