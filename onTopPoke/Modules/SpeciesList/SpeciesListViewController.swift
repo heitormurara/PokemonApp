@@ -69,6 +69,7 @@ extension SpeciesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter?.displayDetails(forSpecieAt: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
