@@ -2,7 +2,6 @@
 
 final class PaginationManagerMock: PaginationManaging {
     var didSetNextPage = false
-    var didSetIsLoading = false
     
     var nextPage: onTopPoke.Page? {
         didSet {
@@ -10,14 +9,7 @@ final class PaginationManagerMock: PaginationManaging {
         }
     }
     
-    var isLoading: Bool = false {
-        didSet {
-            didSetIsLoading = true
-        }
-    }
-    
-    init(nextPage: onTopPoke.Page?, isLoading: Bool) {
+    init(nextPage: onTopPoke.Page?) {
         self.nextPage = nextPage
-        self.isLoading = isLoading
     }
 }

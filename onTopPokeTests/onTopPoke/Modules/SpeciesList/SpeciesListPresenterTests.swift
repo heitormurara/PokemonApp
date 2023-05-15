@@ -8,10 +8,10 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getSpecies_whenLoading_doesntRequestFromService() {
         let pokemonServiceMock = PokemonServiceMock()
-        let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: true)
+        let loadManager = LoadManager(isLoading: true)
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
-                                       paginationManager: paginationManager,
+                                       loadManager: loadManager,
                                        dispatcher: DispatcherStub())
         sut.getSpecies()
         
@@ -20,10 +20,8 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getSpecies_whenNotLoading_whenNextPage_requestsFromService() {
         let pokemonServiceMock = PokemonServiceMock()
-        let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false)
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
-                                       paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
         sut.getSpecies()
         
@@ -32,15 +30,15 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getSpecies_whenNotLoading_whenNextPage_setsLoading() {
         let pokemonServiceStub = PokemonServiceStub()
-        let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
+        let loadManagerMock = LoadManagerMock(isLoading: false)
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceStub,
-                                       paginationManager: paginationManagerMock,
+                                       loadManager: loadManagerMock,
                                        dispatcher: DispatcherStub())
         sut.getSpecies()
         
-        XCTAssertTrue(paginationManagerMock.didSetIsLoading, "getSpecies should set PaginationManaging.isLoading when not loading and next page exists.")
-        XCTAssertTrue(paginationManagerMock.isLoading, "getSpecies should set PaginationManaging.isLoading to true when not loading and next page exists.")
+        XCTAssertTrue(loadManagerMock.didSetIsLoading, "getSpecies should set LoadManaging.isLoading when not loading and next page exists.")
+        XCTAssertTrue(loadManagerMock.isLoading, "getSpecies should set LoadManaging.isLoading to true when not loading and next page exists.")
     }
     
     func test_getSpecies_whenNotLoading_whenNextPage_displaysFooterSpinner() {
@@ -52,12 +50,12 @@ final class SpeciesListPresenterTests: XCTestCase {
         sut.getSpecies()
         
         XCTAssertTrue(viewControllerMock.setFooterSpinnerVisibility, "getImages should set footer spinner visibility.")
-        XCTAssertTrue(viewControllerMock.isFooterSpinnerViewVisible, "getImages should set PaginationManaging.isLoading to true.")
+        XCTAssertTrue(viewControllerMock.isFooterSpinnerViewVisible, "getImages should set footer spinner visible.")
     }
     
     func test_getSpecies_whenNilNextPage_doesntRequestFromService() {
         let pokemonServiceMock = PokemonServiceMock()
-        let paginationManager = PaginationManager(nextPage: nil, isLoading: false)
+        let paginationManager = PaginationManager(nextPage: nil)
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceMock,
                                        paginationManager: paginationManager,
@@ -69,7 +67,7 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getSpecies_onServiceSuccess_updatesNextPage() {
         let pokemonServiceStub = PokemonServiceStub()
-        let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
+        let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0))
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceDummy(),
                                        pokemonService: pokemonServiceStub,
                                        paginationManager: paginationManagerMock,
@@ -81,10 +79,8 @@ final class SpeciesListPresenterTests: XCTestCase {
     
     func test_getSpecies_onServiceSuccess_requestsImages() {
         let pokeAPIServiceMock = PokeAPIServiceMock()
-        let paginationManager = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false)
         let sut = SpeciesListPresenter(pokeAPIService: pokeAPIServiceMock,
                                        pokemonService: PokemonServiceStub(),
-                                       paginationManager: paginationManager,
                                        dispatcher: DispatcherStub())
         sut.getSpecies()
         
@@ -92,15 +88,15 @@ final class SpeciesListPresenterTests: XCTestCase {
     }
     
     func test_getImages_onDefer_disablesLoading() {
-        let paginationManagerMock = PaginationManagerMock(nextPage: Page(limit: 20, offset: 0), isLoading: false)
+        let loadManagerMock = LoadManagerMock(isLoading: false)
         let sut = SpeciesListPresenter(pokeAPIService: PokeAPIServiceStub(),
                                        pokemonService: PokemonServiceStub(),
-                                       paginationManager: paginationManagerMock,
+                                       loadManager: loadManagerMock,
                                        dispatcher: DispatcherStub())
         sut.getSpecies()
         
-        XCTAssertTrue(paginationManagerMock.didSetIsLoading, "getImages should set PaginationManaging.isLoading when deferred.")
-        XCTAssertFalse(paginationManagerMock.isLoading, "getImages should set PaginationManaging.isLoading to false when deferred.")
+        XCTAssertTrue(loadManagerMock.didSetIsLoading, "getImages should set LoadManaging.isLoading when deferred.")
+        XCTAssertFalse(loadManagerMock.isLoading, "getImages should set LoadManaging.isLoading to false when deferred.")
     }
     
     func test_getImages_onResult_appendsSpecies() {
@@ -123,7 +119,7 @@ final class SpeciesListPresenterTests: XCTestCase {
         sut.getSpecies()
         
         XCTAssertTrue(viewControllerMock.setFooterSpinnerVisibility, "getImages should set footer spinner visibility on completion.")
-        XCTAssertFalse(viewControllerMock.isFooterSpinnerViewVisible, "getImages should set PaginationManaging.isLoading to false on completion.")
+        XCTAssertFalse(viewControllerMock.isFooterSpinnerViewVisible, "getImages should set footer spinner hidden on completion.")
     }
     
     func test_getImages_onResult_reloadsData() {

@@ -7,24 +7,28 @@ protocol SpeciesListPresenting {
 }
 
 final class SpeciesListPresenter {
-    weak var viewControllerDelegate: SpeciesListViewControllerDelegate?
-    var coordinator: SpeciesListCoordinating?
-    
+    static private let firstPage = Page(limit: 20, offset: 0)
     private let pokeAPIService: PokeAPIServicing
     private let pokemonService: PokemonServicing
+    private let dispatcher: Dispatching
     
     private var paginationManager: PaginationManaging
-    private let dispatcher: Dispatching
+    private var loadManager: LoadManaging
+    
+    weak var viewControllerDelegate: SpeciesListViewControllerDelegate?
+    var coordinator: SpeciesListCoordinating?
     
     var species: [Specie] = []
     
     init(pokeAPIService: PokeAPIServicing = PokeAPIService(),
          pokemonService: PokemonServicing = PokemonService(),
-         paginationManager: PaginationManaging = PaginationManager(nextPage: Page(limit: 20, offset: 0), isLoading: false),
+         paginationManager: PaginationManaging = PaginationManager(nextPage: firstPage),
+         loadManager: LoadManaging = LoadManager(isLoading: false),
          dispatcher: Dispatching) {
         self.pokeAPIService = pokeAPIService
         self.pokemonService = pokemonService
         self.paginationManager = paginationManager
+        self.loadManager = loadManager
         self.dispatcher = dispatcher
     }
 }
@@ -34,8 +38,8 @@ final class SpeciesListPresenter {
 
 extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
-        guard !paginationManager.isLoading, let nextPage = paginationManager.nextPage else { return }
-        paginationManager.isLoading = true
+        guard !loadManager.isLoading, let nextPage = paginationManager.nextPage else { return }
+        loadManager.isLoading = true
         viewControllerDelegate?.showFooterSpinnerView(true)
         
         pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
@@ -52,7 +56,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
     private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
-            defer { self.paginationManager.isLoading = false }
+            defer { self.loadManager.isLoading = false }
             
             dispatcher.async {
                 self.species.append(contentsOf: species)
