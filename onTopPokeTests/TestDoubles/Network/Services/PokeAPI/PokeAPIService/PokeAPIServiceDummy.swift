@@ -1,21 +1,9 @@
 @testable import onTopPoke
 
 final class PokeAPIServiceDummy: PokeAPIServicing {
-    var gotImages = false
-    var getImagesCount = 0
-    
-    var gotImage = false
-    var getImageCount = 0
-    
     func getImages(for species: [onTopPoke.Specie],
-                   completion: @escaping (onTopPoke.SpecieList) -> Void) {
-        gotImages = true
-        getImagesCount += 1
-    }
+                   completion: @escaping (onTopPoke.SpecieList) -> Void) {}
     
     func getImage(fromSpecieId specieId: Int,
-                  completion: @escaping (onTopPoke.DataResult) -> Void) {
-        gotImage = true
-        getImageCount += 1
-    }
+                  completion: @escaping (onTopPoke.DataResult) -> Void) {}
 }

@@ -2,6 +2,12 @@
 
 final class LoadManagerMock: LoadManaging {
     var didSetIsLoading = false
+    var didStartLoading = false
+    var didStopLoading = false
+    
+    init(isLoading: Bool) {
+        self.isLoading = isLoading
+    }
     
     var isLoading: Bool {
         didSet {
@@ -9,7 +15,11 @@ final class LoadManagerMock: LoadManaging {
         }
     }
     
-    init(isLoading: Bool) {
-        self.isLoading = isLoading
+    func startLoading() {
+        didStartLoading = true
+    }
+    
+    func stopLoading() {
+        didStopLoading = true
     }
 }

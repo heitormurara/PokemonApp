@@ -3,18 +3,28 @@ import UIKit
 
 final class SpeciesListViewControllerMock: SpeciesListViewControllerDelegate {
     var reloadedData = false
-    var setFooterSpinnerVisibility = false
-    var isFooterSpinnerViewVisible = false
+    
+    var didSetFooterSpinnerVisibility = false
+    var didSetFooterSpinnerVisible = false
+    var isFooterSpinnerVisible = false
+    
+    var didSetLoadingVisibility = false
+    var isLoadingVisible = false
     
     func reloadData() {
         reloadedData = true
     }
     
-    func displayLoading(_ isVisible: Bool) {}
+    func displayLoading(_ isVisible: Bool) {
+        didSetLoadingVisibility = true
+        isLoadingVisible = isVisible
+    }
     
     func displayFooterSpinner(_ isVisible: Bool) {
-        setFooterSpinnerVisibility = true
-        isFooterSpinnerViewVisible = isVisible
+        didSetFooterSpinnerVisibility = true
+        isFooterSpinnerVisible = isVisible
+        
+        if isVisible { didSetFooterSpinnerVisible = true  }
     }
     
     func displayError() {}

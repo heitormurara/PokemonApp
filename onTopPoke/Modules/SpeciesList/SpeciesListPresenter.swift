@@ -8,27 +8,24 @@ protocol SpeciesListPresenting {
 
 final class SpeciesListPresenter {
     static private let firstPage = Page(limit: 20, offset: 0)
+    
     private let pokeAPIService: PokeAPIServicing
     private let pokemonService: PokemonServicing
     private let dispatcher: Dispatching
-    
     private var paginationManager: PaginationManaging
-    private var loadManager: LoadManaging
     
     weak var viewControllerDelegate: SpeciesListViewControllerDelegate?
     var coordinator: SpeciesListCoordinating?
-    
     var species: [Specie] = []
+    var isLoading: Bool = false
     
     init(pokeAPIService: PokeAPIServicing = PokeAPIService(),
          pokemonService: PokemonServicing = PokemonService(),
          paginationManager: PaginationManaging = PaginationManager(nextPage: firstPage),
-         loadManager: LoadManaging = LoadManager(isLoading: false),
          dispatcher: Dispatching) {
         self.pokeAPIService = pokeAPIService
         self.pokemonService = pokemonService
         self.paginationManager = paginationManager
-        self.loadManager = loadManager
         self.dispatcher = dispatcher
     }
 }
@@ -38,9 +35,8 @@ final class SpeciesListPresenter {
 
 extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
-        guard !loadManager.isLoading, let nextPage = paginationManager.nextPage else { return }
-        loadManager.isLoading = true
-        handleLoading()
+        guard !isLoading, let nextPage = paginationManager.nextPage else { return }
+        startLoading()
         
         pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
             guard let self = self else { return }
@@ -50,10 +46,8 @@ extension SpeciesListPresenter: SpeciesListPresenting {
                 self.paginationManager.nextPage = paginatedResult.next
                 self.getImages(from: paginatedResult.results)
             case .failure:
-                self.loadManager.isLoading = false
-                
                 dispatcher.async {
-                    self.handleLoading()
+                    self.stopLoading()
                     self.viewControllerDelegate?.displayError()
                 }
             }
@@ -73,21 +67,33 @@ extension SpeciesListPresenter {
     private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
-            self.loadManager.isLoading = false
             
             dispatcher.async {
-                self.handleLoading()
+                self.stopLoading()
                 self.species.append(contentsOf: species)
                 self.viewControllerDelegate?.reloadData()
             }
         }
     }
-    
-    private func handleLoading() {
-        if self.species.isEmpty {
-            self.viewControllerDelegate?.displayLoading(loadManager.isLoading)
+}
+
+
+// MARK: - LoadManaging
+
+extension SpeciesListPresenter: LoadManaging {
+    func startLoading() {
+        isLoading = true
+        
+        if species.isEmpty {
+            viewControllerDelegate?.displayLoading(true)
         } else {
-            self.viewControllerDelegate?.displayFooterSpinner(loadManager.isLoading)
+            viewControllerDelegate?.displayFooterSpinner(true)
         }
+    }
+    
+    func stopLoading() {
+        isLoading = false
+        viewControllerDelegate?.displayLoading(false)
+        viewControllerDelegate?.displayFooterSpinner(false)
     }
 }
