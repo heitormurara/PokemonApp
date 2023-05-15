@@ -47,6 +47,7 @@ final class SpeciesListViewController: UIViewController {
     private lazy var errorView: RetriableErrorView = {
         let errorView = RetriableErrorView()
         let errorModel = RetriableErrorModel(image: .defaultError, text: "An issue ocurred while loading Pokémon Species.") { [weak self] in
+            self?.errorView.isHidden = true
             self?.presenter.getSpecies()
         }
         errorView.isHidden = true

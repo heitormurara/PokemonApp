@@ -51,8 +51,9 @@ extension SpeciesListPresenter: SpeciesListPresenting {
                 self.getImages(from: paginatedResult.results)
             case .failure:
                 self.loadManager.isLoading = false
-                self.handleLoading()
+                
                 dispatcher.async {
+                    self.handleLoading()
                     self.viewControllerDelegate?.displayError()
                 }
             }
@@ -73,24 +74,20 @@ extension SpeciesListPresenter {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
             self.loadManager.isLoading = false
-            self.handleLoading()
-            self.species.append(contentsOf: species)
             
             dispatcher.async {
+                self.handleLoading()
+                self.species.append(contentsOf: species)
                 self.viewControllerDelegate?.reloadData()
             }
         }
     }
     
     private func handleLoading() {
-        dispatcher.async { [weak self] in
-            guard let self = self else { return }
-            
-            if self.species.isEmpty {
-                self.viewControllerDelegate?.displayLoading(loadManager.isLoading)
-            } else {
-                self.viewControllerDelegate?.displayFooterSpinner(loadManager.isLoading)
-            }
+        if self.species.isEmpty {
+            self.viewControllerDelegate?.displayLoading(loadManager.isLoading)
+        } else {
+            self.viewControllerDelegate?.displayFooterSpinner(loadManager.isLoading)
         }
     }
 }
