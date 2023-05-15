@@ -40,7 +40,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
     func getSpecies() {
         guard !loadManager.isLoading, let nextPage = paginationManager.nextPage else { return }
         loadManager.isLoading = true
-        viewControllerDelegate?.displayFooterSpinner(true)
+        handleLoading()
         
         pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
             guard let self = self else { return }
@@ -51,7 +51,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
                 self.getImages(from: paginatedResult.results)
             case .failure:
                 self.loadManager.isLoading = false
-                
+                self.handleLoading()
                 dispatcher.async {
                     self.viewControllerDelegate?.displayError()
                 }
@@ -59,21 +59,38 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         }
     }
     
+    func displayDetails(ofSpecieAt indexPath: IndexPath) {
+        let specie = species[indexPath.row]
+        coordinator?.displayDetails(of: specie)
+    }
+}
+
+
+// MARK: - Private API
+
+extension SpeciesListPresenter {
     private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
-            defer { self.loadManager.isLoading = false }
+            self.loadManager.isLoading = false
+            self.handleLoading()
+            self.species.append(contentsOf: species)
             
             dispatcher.async {
-                self.species.append(contentsOf: species)
-                self.viewControllerDelegate?.displayFooterSpinner(false)
                 self.viewControllerDelegate?.reloadData()
             }
         }
     }
     
-    func displayDetails(ofSpecieAt indexPath: IndexPath) {
-        let specie = species[indexPath.row]
-        coordinator?.displayDetails(of: specie)
+    private func handleLoading() {
+        dispatcher.async { [weak self] in
+            guard let self = self else { return }
+            
+            if self.species.isEmpty {
+                self.viewControllerDelegate?.displayLoading(loadManager.isLoading)
+            } else {
+                self.viewControllerDelegate?.displayFooterSpinner(loadManager.isLoading)
+            }
+        }
     }
 }

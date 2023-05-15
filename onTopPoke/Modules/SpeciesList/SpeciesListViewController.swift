@@ -2,6 +2,7 @@ import UIKit
 
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
+    func displayLoading(_ isVisible: Bool)
     func displayFooterSpinner(_ isVisible: Bool)
     func displayError()
     func pushViewController(_ viewController: UIViewController)
@@ -19,6 +20,20 @@ final class SpeciesListViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var loadingView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityIndicatorView.color = .systemGray
+        
+        view.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicatorView
+    }()
+    
     private lazy var footerSpinnerView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +49,7 @@ final class SpeciesListViewController: UIViewController {
         let errorModel = RetriableErrorModel(image: .defaultError, text: "An issue ocurred while loading Pokémon Species.") { [weak self] in
             self?.presenter.getSpecies()
         }
+        errorView.isHidden = true
         errorView.configure(with: errorModel)
         errorView.translatesAutoresizingMaskIntoConstraints = false
         return errorView
@@ -64,6 +80,10 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
         errorView.isHidden = true
         
         tableView.reloadData()
+    }
+    
+    func displayLoading(_ isVisible: Bool) {
+        isVisible ? loadingView.startAnimating() : loadingView.stopAnimating()
     }
     
     func displayFooterSpinner(_ isVisible: Bool) {
