@@ -43,12 +43,18 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         viewControllerDelegate?.displayFooterSpinner(true)
         
         pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
+            guard let self = self else { return }
+            
             switch result {
             case let .success(paginatedResult):
-                self?.paginationManager.nextPage = paginatedResult.next
-                self?.getImages(from: paginatedResult.results)
+                self.paginationManager.nextPage = paginatedResult.next
+                self.getImages(from: paginatedResult.results)
             case .failure:
-                break
+                self.loadManager.isLoading = false
+                
+                dispatcher.async {
+                    self.viewControllerDelegate?.displayError()
+                }
             }
         }
     }

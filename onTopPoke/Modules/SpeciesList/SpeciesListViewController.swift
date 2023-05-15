@@ -3,6 +3,7 @@ import UIKit
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
     func displayFooterSpinner(_ isVisible: Bool)
+    func displayError()
     func pushViewController(_ viewController: UIViewController)
 }
 
@@ -28,6 +29,16 @@ final class SpeciesListViewController: UIViewController {
         return view
     }()
     
+    private lazy var errorView: RetriableErrorView = {
+        let errorView = RetriableErrorView()
+        let errorModel = RetriableErrorModel(image: .defaultError, text: "An issue ocurred while loading Pokémon Species.") { [weak self] in
+            self?.presenter.getSpecies()
+        }
+        errorView.configure(with: errorModel)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        return errorView
+    }()
+    
     init(presenter: SpeciesListPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -49,11 +60,19 @@ final class SpeciesListViewController: UIViewController {
 
 extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     func reloadData() {
+        tableView.isHidden = false
+        errorView.isHidden = true
+        
         tableView.reloadData()
     }
     
     func displayFooterSpinner(_ isVisible: Bool) {
         tableView.tableFooterView = isVisible ? footerSpinnerView : nil
+    }
+    
+    func displayError() {
+        errorView.isHidden = false
+        tableView.isHidden = true
     }
     
     func pushViewController(_ viewController: UIViewController) {
@@ -116,12 +135,18 @@ extension SpeciesListViewController {
     
     private func setUpConstraints() {
         view.addSubview(tableView)
+        view.addSubview(errorView)
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            errorView.topAnchor.constraint(equalTo: view.topAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
