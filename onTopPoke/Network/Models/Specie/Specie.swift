@@ -1,6 +1,6 @@
 import UIKit
 
-struct PokemonSpecieItem: Decodable {
+struct Specie: Decodable {
     let name: String
     private let urlString: String
     

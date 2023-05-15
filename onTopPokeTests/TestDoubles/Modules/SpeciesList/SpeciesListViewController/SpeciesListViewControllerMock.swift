@@ -1,3 +1,4 @@
+import UIKit
 @testable import onTopPoke
 
 final class SpeciesListViewControllerMock: SpeciesListViewControllerDelegate {
@@ -13,4 +14,6 @@ final class SpeciesListViewControllerMock: SpeciesListViewControllerDelegate {
         setFooterSpinnerVisibility = true
         isFooterSpinnerViewVisible = isVisible
     }
+    
+    func pushViewController(_ viewController: UIViewController) {}
 }

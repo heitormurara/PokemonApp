@@ -1,6 +1,6 @@
 protocol SpecieDetailsPresenting {
-    var specieItem: PokemonSpecieItem { get }
-    var specieChain: [PokemonSpecieItem]? { get }
+    var specie: Specie { get }
+    var specieChain: [Specie]? { get }
     func getDetails()
 }
 
@@ -11,14 +11,14 @@ final class SpecieDetailsPresenter {
     private let pokeAPIService: PokeAPIServicing
     private let dispatcher: Dispatching
     
-    let specieItem: PokemonSpecieItem
-    private(set) var specieChain: [PokemonSpecieItem]?
+    let specie: Specie
+    private(set) var specieChain: [Specie]?
     
-    init(specieItem: PokemonSpecieItem,
+    init(specieItem: Specie,
          pokemonService: PokemonServicing = PokemonService(),
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
          dispatcher: Dispatching) {
-        self.specieItem = specieItem
+        self.specie = specieItem
         self.pokemonService = pokemonService
         self.pokeAPIService = pokeAPIService
         self.dispatcher = dispatcher
@@ -30,14 +30,14 @@ final class SpecieDetailsPresenter {
 
 extension SpecieDetailsPresenter: SpecieDetailsPresenting {
     func getDetails() {
-        guard let specieId = specieItem.id else { return }
+        guard let specieId = specie.id else { return }
         
         pokemonService.getSpecie(fromSpecieId: specieId) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case let .success(specie):
-                guard let evolutionChainId = specie.evolutionChainId else { return }
+            case let .success(specieDetails):
+                guard let evolutionChainId = specieDetails.evolutionChainId else { return }
                 self.getEvolutionChain(fromChainId: evolutionChainId)
             case .failure: break
             }
@@ -49,14 +49,14 @@ extension SpecieDetailsPresenter: SpecieDetailsPresenting {
             guard let self = self else { return }
             
             switch result {
-            case let .success(chain):
-                self.getImages(from: chain.flatSpecieChain)
+            case let .success(evolutionChainResponse):
+                self.getImages(from: evolutionChainResponse.flatSpecieChain)
             case .failure: break
             }
         }
     }
     
-    private func getImages(from species: [PokemonSpecieItem]) {
+    private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
             self.specieChain = species

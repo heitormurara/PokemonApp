@@ -1,8 +1,8 @@
-struct PokemonChainItem: Decodable {
-    let originSpecie: PokemonSpecieItem
-    let chain: [PokemonChainItem]
+struct EvolutionChain: Decodable {
+    let originSpecie: Specie
+    let chain: [EvolutionChain]
     
-    var nextChainItem: PokemonChainItem? {
+    var nextChainItem: EvolutionChain? {
         chain.first
     }
     

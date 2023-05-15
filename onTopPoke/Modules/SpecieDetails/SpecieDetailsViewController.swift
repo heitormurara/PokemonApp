@@ -8,7 +8,7 @@ final class SpecieDetailsViewController: UIViewController {
     let presenter: SpecieDetailsPresenting
     
     private lazy var imageView: UIImageView = {
-        let view = UIImageView(image: presenter.specieItem.image)
+        let view = UIImageView(image: presenter.specie.image)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -77,7 +77,7 @@ extension SpecieDetailsViewController {
         setUpConstraints()
         
         view.backgroundColor = .systemBackground
-        title = presenter.specieItem.name.capitalized
+        title = presenter.specie.name.capitalized
     }
     
     private func setUpConstraints() {

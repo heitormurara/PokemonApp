@@ -1,6 +1,6 @@
 import Foundation
 
-struct PokemonSpecie: Decodable {
+struct SpecieDetails: Decodable {
     private let evolutionChain: URLObject
     
     var evolutionChainId: Int? {

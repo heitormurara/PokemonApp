@@ -1,7 +1,7 @@
 import Foundation
 
 protocol SpeciesListPresenting {
-    var species: [PokemonSpecieItem] { get }
+    var species: [Specie] { get }
     func getSpecies()
     func displayDetails(forSpecieAt indexPath: IndexPath)
 }
@@ -13,7 +13,7 @@ final class SpeciesListPresenter {
     private var paginationManager: PaginationManaging
     private let dispatcher: Dispatching
     
-    var species: [PokemonSpecieItem] = []
+    var species: [Specie] = []
     
     init(viewControllerDelegate: SpeciesListViewControllerDelegate,
          pokeAPIService: PokeAPIServicing = PokeAPIService(),
@@ -37,7 +37,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         paginationManager.isLoading = true
         viewControllerDelegate?.showFooterSpinnerView(true)
         
-        pokemonService.getSpecies(page: nextPage) { [weak self] (result: PokemonSpecieItemPaginatedResult) in
+        pokemonService.getSpecies(page: nextPage) { [weak self] (result: SpeciePaginatedResult) in
             switch result {
             case let .success(paginatedResult):
                 self?.paginationManager.nextPage = paginatedResult.next
@@ -48,7 +48,7 @@ extension SpeciesListPresenter: SpeciesListPresenting {
         }
     }
     
-    private func getImages(from species: [PokemonSpecieItem]) {
+    private func getImages(from species: [Specie]) {
         pokeAPIService.getImages(for: species) { [weak self] species in
             guard let self = self else { return }
             defer { self.paginationManager.isLoading = false }
