@@ -1,5 +1,3 @@
-import Foundation
-
 typealias SpeciePaginatedResult = Result<PaginatedResult<Specie>, Error>
 typealias SpecieDetailsResult = Result<SpecieDetails, Error>
 typealias EvolutionChainResponseResult = Result<EvolutionChainResponse, Error>
@@ -20,27 +18,12 @@ final class PokemonService {
     init(networkProvider: NetworkProviding = NetworkProvider()) {
         self.networkProvider = networkProvider
     }
-    
-    var success = false
 }
 
 extension PokemonService: PokemonServicing {
     func getSpecies(page: Page,
                     completion: @escaping (SpeciePaginatedResult) -> Void) {
-        networkProvider.request(networkRoute.getSpecies(page)) { (result: SpeciePaginatedResult) in
-            switch result {
-            case let .success(paginatedResult):
-                sleep(2)
-                if self.success {
-                    completion(.success(paginatedResult))
-                } else {
-                    self.success = true
-                    completion(.failure(NetworkProviderError.emptyData))
-                }
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
+        networkProvider.request(networkRoute.getSpecies(page), completion: completion)
     }
     
     func getSpecie(fromSpecieId specieId: Int,
