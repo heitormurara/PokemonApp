@@ -537,9 +537,9 @@
 		710FC30D2A02DD5500899EA2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				581509302A1087ED00F4D3CE /* Services */,
-				586FB3BD2A0FE23A0003D2AB /* Models */,
 				586FB3B62A0FE13D0003D2AB /* Layer */,
+				586FB3BD2A0FE23A0003D2AB /* Models */,
+				581509302A1087ED00F4D3CE /* Services */,
 			);
 			path = Network;
 			sourceTree = "<group>";
