@@ -218,8 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				58059BFC2A1297D9000AB195 /* ErrorImage.swift */,
-				58059BF72A1287F9000AB195 /* RetriableErrorView.swift */,
 				58059BFA2A1297CB000AB195 /* RetriableErrorModel.swift */,
+				58059BF72A1287F9000AB195 /* RetriableErrorView.swift */,
 			);
 			path = RetriableErrorView;
 			sourceTree = "<group>";
@@ -466,6 +466,7 @@
 		58A6D6552A0F3B3A00902695 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				586FB3BA2A0FE1BA0003D2AB /* Models */,
 				58059BD92A118C72000AB195 /* SpecieDetails */,
 				710FC31B2A02DE3C00899EA2 /* SpeciesList */,
 			);
@@ -573,7 +574,6 @@
 			isa = PBXGroup;
 			children = (
 				58A6D6542A0F3A5800902695 /* App */,
-				586FB3BA2A0FE1BA0003D2AB /* Models */,
 				58059BF62A1287E2000AB195 /* Components */,
 				58A6D6552A0F3B3A00902695 /* Modules */,
 				710FC30D2A02DD5500899EA2 /* Network */,
