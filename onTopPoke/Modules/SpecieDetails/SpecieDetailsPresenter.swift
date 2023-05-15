@@ -30,5 +30,40 @@ final class SpecieDetailsPresenter {
 
 extension SpecieDetailsPresenter: SpecieDetailsPresenting {
     func getDetails() {
+        guard let specieId = specieItem.id else { return }
+        
+        pokemonService.getSpecie(fromSpecieId: specieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(specie):
+                guard let evolutionChainId = specie.evolutionChainId else { return }
+                self.getEvolutionChain(fromChainId: evolutionChainId)
+            case .failure: break
+            }
+        }
+    }
+    
+    private func getEvolutionChain(fromChainId chainId: Int) {
+        pokemonService.getEvolutionChain(fromChainId: chainId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(chain):
+                self.getImages(from: chain.flatSpecieChain)
+            case .failure: break
+            }
+        }
+    }
+    
+    private func getImages(from species: [PokemonSpecieItem]) {
+        pokeAPIService.getImages(for: species) { [weak self] species in
+            guard let self = self else { return }
+            self.specieChain = species
+            
+            dispatcher.async {
+                self.viewControllerDelegate?.reloadData()
+            }
+        }
     }
 }

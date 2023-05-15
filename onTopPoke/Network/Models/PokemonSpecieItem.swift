@@ -18,15 +18,8 @@ struct PokemonSpecieItem: Decodable {
     
     var image: UIImage?
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case name
-        case url
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try container.decode(String.self, forKey: .name)
-        urlString = try container.decode(String.self, forKey: .url)
+        case urlString = "url"
     }
 }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */; };
 		58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */; };
+		58059BDF2A118F45000AB195 /* PokemonChainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDE2A118F45000AB195 /* PokemonChainItem.swift */; };
+		58059BE12A11BBA6000AB195 /* PokemonChainResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BE02A11BBA6000AB195 /* PokemonChainResponse.swift */; };
+		58059BE32A11BF92000AB195 /* PokemonSpecie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BE22A11BF92000AB195 /* PokemonSpecie.swift */; };
 		581509322A1087FA00F4D3CE /* PokeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581509312A1087FA00F4D3CE /* PokeAPIService.swift */; };
 		581509342A108C2F00F4D3CE /* PokemonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581509332A108C2F00F4D3CE /* PokemonService.swift */; };
 		5815093C2A1099EB00F4D3CE /* PokemonServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5815093B2A1099EB00F4D3CE /* PokemonServiceMock.swift */; };
@@ -66,6 +69,9 @@
 /* Begin PBXFileReference section */
 		58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsViewController.swift; sourceTree = "<group>"; };
 		58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsPresenter.swift; sourceTree = "<group>"; };
+		58059BDE2A118F45000AB195 /* PokemonChainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonChainItem.swift; sourceTree = "<group>"; };
+		58059BE02A11BBA6000AB195 /* PokemonChainResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonChainResponse.swift; sourceTree = "<group>"; };
+		58059BE22A11BF92000AB195 /* PokemonSpecie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonSpecie.swift; sourceTree = "<group>"; };
 		581509312A1087FA00F4D3CE /* PokeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPIService.swift; sourceTree = "<group>"; };
 		581509332A108C2F00F4D3CE /* PokemonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonService.swift; sourceTree = "<group>"; };
 		5815093B2A1099EB00F4D3CE /* PokemonServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceMock.swift; sourceTree = "<group>"; };
@@ -278,9 +284,12 @@
 		586FB3BD2A0FE23A0003D2AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				586FB3BB2A0FE1C60003D2AB /* PokemonSpecieItem.swift */,
 				586FB3BE2A0FE2430003D2AB /* PaginatedResult.swift */,
 				586FB3C62A1021200003D2AB /* Page.swift */,
+				58059BE22A11BF92000AB195 /* PokemonSpecie.swift */,
+				586FB3BB2A0FE1C60003D2AB /* PokemonSpecieItem.swift */,
+				58059BDE2A118F45000AB195 /* PokemonChainItem.swift */,
+				58059BE02A11BBA6000AB195 /* PokemonChainResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -659,9 +668,12 @@
 				586FB3B12A0F42BE0003D2AB /* NetworkProvider.swift in Sources */,
 				586FB3C52A1010050003D2AB /* PokeAPIRoute.swift in Sources */,
 				586FB3B52A0FE0770003D2AB /* SpeciesListViewController.swift in Sources */,
+				58059BE12A11BBA6000AB195 /* PokemonChainResponse.swift in Sources */,
 				581509412A109C3200F4D3CE /* PaginationManager.swift in Sources */,
 				58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */,
 				58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */,
+				58059BDF2A118F45000AB195 /* PokemonChainItem.swift in Sources */,
+				58059BE32A11BF92000AB195 /* PokemonSpecie.swift in Sources */,
 				586FB3C22A0FE4700003D2AB /* SpeciesListPresenter.swift in Sources */,
 				581509322A1087FA00F4D3CE /* PokeAPIService.swift in Sources */,
 				581509342A108C2F00F4D3CE /* PokemonService.swift in Sources */,
