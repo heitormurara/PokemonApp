@@ -22,6 +22,25 @@ final class SpecieDetailsViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var tableHeaderView: UIView = {
+        let view = UIView()
+        let label = UILabel()
+        label.text = "Evolution Chain"
+        label.font = .boldSystemFont(ofSize: 24)
+        
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            label.topAnchor.constraint(equalTo: view.topAnchor),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     init(presenter: SpecieDetailsPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -78,6 +97,7 @@ extension SpecieDetailsViewController {
         
         view.backgroundColor = .systemBackground
         title = presenter.specie.name.capitalized
+        tableView.tableHeaderView = tableHeaderView
     }
     
     private func setUpConstraints() {
