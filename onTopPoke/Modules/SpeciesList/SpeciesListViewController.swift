@@ -16,7 +16,6 @@ final class SpeciesListViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
@@ -25,23 +24,20 @@ final class SpeciesListViewController: UIViewController {
         activityIndicatorView.color = .systemGray
         
         view.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        activityIndicatorView.center(equalTo: view)
         
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView
     }()
     
     private lazy var footerSpinnerView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        containerView.setConstrainable()
+        
         let spinner = UIActivityIndicatorView()
-        spinner.center = view.center
-        view.addSubview(spinner)
-        spinner.startAnimating()
-        return view
+        spinner.center = containerView.center
+        
+        containerView.addSubview(spinner)
+        return containerView
     }()
     
     private lazy var errorView: RetriableErrorView = {
@@ -52,7 +48,6 @@ final class SpeciesListViewController: UIViewController {
         }
         errorView.isHidden = true
         errorView.configure(with: errorModel)
-        errorView.translatesAutoresizingMaskIntoConstraints = false
         return errorView
     }()
     
@@ -149,25 +144,14 @@ extension SpeciesListViewController: UITableViewDataSource {
 extension SpeciesListViewController {
     private func setUp() {
         setUpConstraints()
-        
         view.backgroundColor = .systemBackground
         title = "Pokémon Species"
     }
     
     private func setUpConstraints() {
-        view.addSubview(tableView)
-        view.addSubview(errorView)
+        view.addSubviews(tableView, errorView)
         
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            errorView.topAnchor.constraint(equalTo: view.topAnchor),
-            errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            errorView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        tableView.constraints(equalTo: view)
+        errorView.constraints(equalTo: view)
     }
 }
