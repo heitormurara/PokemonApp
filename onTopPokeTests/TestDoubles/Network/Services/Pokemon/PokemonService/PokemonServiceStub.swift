@@ -1,10 +1,10 @@
 import Foundation
 @testable import onTopPoke
 
-final class PokemonServiceStub: PokemonServicing {
+final class PokemonServiceStub: PokeAPIServicing {
     func getSpecies(page: onTopPoke.Page,
                     completion: @escaping (onTopPoke.SpeciePaginatedResult) -> Void) {
-        let decoded: PaginatedResult<Specie> = JSONReader().getFromFile(named: "speciePaginatedResult")
+        let decoded: Paginated<Specie> = JSONReader().getFromFile(named: "speciePaginatedResult")
         completion(.success(decoded))
     }
     

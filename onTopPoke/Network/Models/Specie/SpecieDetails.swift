@@ -1,26 +1,28 @@
 import Foundation
 
 struct SpecieDetails: Decodable {
-    private let evolutionChain: URLObject
-    
-    var evolutionChainId: Int? {
-        let string = evolutionChain.url
-        let range = NSRange(location: 0, length: string.utf16.count)
-        let regex = try? NSRegularExpression(pattern: "\\/(\\d+)\\/$")
-        
-        if let match = regex?.firstMatch(in: string, range: range),
-           let matchRange = Range(match.range(at: 1), in: string),
-           let intValue = Int(string[matchRange]) {
-            return intValue
-        }
-        return nil
-    }
+    let evolutionChainID: Int
     
     enum CodingKeys: String, CodingKey {
         case evolutionChain = "evolution_chain"
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let evolutionChain = try container.decode(URLObject.self, forKey: .evolutionChain)
+        
+        if let id = RegexInterpreter.idFromURL(evolutionChain.urlString) {
+            self.evolutionChainID = id
+        } else {
+            throw NetworkProviderError.decodingError
+        }
+    }
 }
 
 struct URLObject: Decodable {
-    let url: String
+    let urlString: String
+    
+    enum CodingKeys: String, CodingKey {
+        case urlString = "url"
+    }
 }

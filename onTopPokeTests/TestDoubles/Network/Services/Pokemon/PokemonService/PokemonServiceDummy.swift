@@ -1,6 +1,6 @@
 @testable import onTopPoke
 
-final class PokemonServiceDummy: PokemonServicing {
+final class PokemonServiceDummy: PokeAPIServicing {
     func getSpecies(page: onTopPoke.Page,
                     completion: @escaping (onTopPoke.SpeciePaginatedResult) -> Void) {}
     

@@ -1,6 +1,6 @@
 @testable import onTopPoke
 
-final class PokemonServiceMock: PokemonServicing {
+final class PokemonServiceMock: PokeAPIServicing {
     var gotSpecies = false
     var getSpeciesCount = 0
     

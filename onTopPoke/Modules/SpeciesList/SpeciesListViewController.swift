@@ -1,11 +1,10 @@
 import UIKit
 
+@MainActor
 protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
     func displayLoading(_ isVisible: Bool)
     func displayFooterSpinner(_ isVisible: Bool)
-    func displayError()
-    func pushViewController(_ viewController: UIViewController)
 }
 
 final class SpeciesListViewController: UIViewController {
@@ -40,17 +39,6 @@ final class SpeciesListViewController: UIViewController {
         return containerView
     }()
     
-    private lazy var errorView: RetriableErrorView = {
-        let errorView = RetriableErrorView()
-        let errorModel = RetriableErrorModel(image: .defaultError, text: "An issue ocurred while loading Pokémon Species.") { [weak self] in
-            self?.errorView.isHidden = true
-            self?.presenter.getSpecies()
-        }
-        errorView.isHidden = true
-        errorView.configure(with: errorModel)
-        return errorView
-    }()
-    
     init(presenter: SpeciesListPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -63,7 +51,10 @@ final class SpeciesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        presenter.getSpecies()
+        
+        Task.detached { [weak self] in
+            await self?.presenter.viewDidLoad()
+        }
     }
 }
 
@@ -72,9 +63,6 @@ final class SpeciesListViewController: UIViewController {
 
 extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     func reloadData() {
-        tableView.isHidden = false
-        errorView.isHidden = true
-        
         tableView.reloadData()
     }
     
@@ -84,15 +72,6 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     
     func displayFooterSpinner(_ isVisible: Bool) {
         tableView.tableFooterView = isVisible ? footerSpinnerView : nil
-    }
-    
-    func displayError() {
-        errorView.isHidden = false
-        tableView.isHidden = true
-    }
-    
-    func pushViewController(_ viewController: UIViewController) {
-        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -106,12 +85,14 @@ extension SpeciesListViewController: UITableViewDelegate {
         let frameHeight = scrollView.frame.size.height
         
         if contentOffset > contentHeight - frameHeight - 100 {
-            presenter.getSpecies()
+            Task.detached { [weak self] in
+                await self?.presenter.viewDidScroll()
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.displayDetails(ofSpecieAt: indexPath)
+        presenter.didSelectRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -121,13 +102,13 @@ extension SpeciesListViewController: UITableViewDelegate {
 
 extension SpeciesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.species.count
+        presenter.dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "SpeciesListCell")
         
-        let specie = presenter.species[indexPath.row]
+        let specie = presenter.dataSource[indexPath.row]
         var contentConfiguration = cell.defaultContentConfiguration()
         contentConfiguration.text = specie.name.capitalized
         contentConfiguration.image = specie.image
@@ -149,9 +130,7 @@ extension SpeciesListViewController {
     }
     
     private func setUpConstraints() {
-        view.addSubviews(tableView, errorView)
-        
+        view.addSubview(tableView)
         tableView.constraints(equalTo: view)
-        errorView.constraints(equalTo: view)
     }
 }

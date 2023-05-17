@@ -1,25 +1,29 @@
 import UIKit
 
 struct Specie: Decodable {
+    let id: Int
     let name: String
-    private let urlString: String
-    
-    var id: Int? {
-        let range = NSRange(location: 0, length: urlString.utf16.count)
-        let regex = try? NSRegularExpression(pattern: "\\/(\\d+)\\/$")
-        
-        if let match = regex?.firstMatch(in: urlString, range: range),
-           let matchRange = Range(match.range(at: 1), in: urlString),
-           let intValue = Int(urlString[matchRange]) {
-            return intValue
-        }
-        return nil
-    }
     
     var image: UIImage?
     
     enum CodingKeys: String, CodingKey {
         case name
         case urlString = "url"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        
+        let urlString = try container.decode(String.self, forKey: .urlString)
+        if let id = RegexInterpreter.idFromURL(urlString) {
+            self.id = id
+        } else {
+            throw NetworkProviderError.decodingError
+        }
+    }
+    
+    mutating func setImage(_ data: Data) {
+        image = UIImage(data: data)
     }
 }

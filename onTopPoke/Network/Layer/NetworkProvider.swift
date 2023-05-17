@@ -14,8 +14,8 @@ enum NetworkProviderError: Error {
 
 protocol NetworkProviding {
     func request<T>(_ route: NetworkRoute,
-                    decodeInto modelType: T.Type) async -> Result<T, NetworkProviderError> where T : Decodable
-    func request(_ route: NetworkRoute) async -> Result<Data, NetworkProviderError>
+                    decodeInto modelType: T.Type) async -> Result<T, Error> where T : Decodable
+    func request(_ route: NetworkRoute) async -> Result<Data, Error>
 }
 
 final class NetworkProvider {
@@ -31,7 +31,7 @@ final class NetworkProvider {
 
 extension NetworkProvider: NetworkProviding {
     func request<T>(_ route: NetworkRoute,
-                    decodeInto modelType: T.Type) async -> Result<T, NetworkProviderError> where T : Decodable {
+                    decodeInto modelType: T.Type) async -> Result<T, Error> where T : Decodable {
         guard case let .success(data) = await request(route) else {
             return .failure(NetworkProviderError.unknown)
         }
@@ -39,12 +39,13 @@ extension NetworkProvider: NetworkProviding {
         do {
             let decodable = try JSONDecoder().decode(modelType, from: data)
             return .success(decodable)
-        } catch {
+        } catch let error {
+            print(error)
             return .failure(NetworkProviderError.decodingError)
         }
     }
     
-    func request(_ route: NetworkRoute) async -> Result<Data, NetworkProviderError> {
+    func request(_ route: NetworkRoute) async -> Result<Data, Error> {
         guard let urlRequest = route.urlRequest else {
             return .failure(NetworkProviderError.emptyURLRequest)
         }
