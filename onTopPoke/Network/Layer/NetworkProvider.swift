@@ -5,11 +5,17 @@ typealias DataResult = Result<Data, Error>
 enum NetworkProviderError: Error {
     case emptyData
     case emptyURLRequest
+    case emptyResponse
+    case decodingError
+    case unauthorized
+    case unexpedtedStatusCode
+    case unknown
 }
 
 protocol NetworkProviding {
-    func request<T: Decodable>(_ service: NetworkRoute, completion: @escaping (Result<T, Error>) -> Void)
-    func requestData(_ service: NetworkRoute, completion: @escaping (DataResult) -> Void)
+    func request<T>(_ route: NetworkRoute,
+                    decodeInto modelType: T.Type) async -> Result<T, NetworkProviderError> where T : Decodable
+    func request(_ route: NetworkRoute) async -> Result<Data, NetworkProviderError>
 }
 
 final class NetworkProvider {
@@ -24,42 +30,42 @@ final class NetworkProvider {
 // MARK: - NetworkServiceProviding
 
 extension NetworkProvider: NetworkProviding {
-    func request<T: Decodable>(_ service: NetworkRoute,
-                               completion: @escaping (Result<T, Error>) -> Void) {
-        self.requestData(service) { result in
-            switch result {
-            case let .success(data):
-                do {
-                    let decoded = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(decoded))
-                } catch let error {
-                    completion(.failure(error))
-                }
-            case let .failure(error):
-                completion(.failure(error))
-            }
+    func request<T>(_ route: NetworkRoute,
+                    decodeInto modelType: T.Type) async -> Result<T, NetworkProviderError> where T : Decodable {
+        guard case let .success(data) = await request(route) else {
+            return .failure(NetworkProviderError.unknown)
+        }
+        
+        do {
+            let decodable = try JSONDecoder().decode(modelType, from: data)
+            return .success(decodable)
+        } catch {
+            return .failure(NetworkProviderError.decodingError)
         }
     }
     
-    func requestData(_ service: NetworkRoute,
-                     completion: @escaping (Result<Data, Error>) -> Void) {
-        guard let urlRequest = service.urlRequest else {
-            completion(.failure(NetworkProviderError.emptyURLRequest))
-            return
+    func request(_ route: NetworkRoute) async -> Result<Data, NetworkProviderError> {
+        guard let urlRequest = route.urlRequest else {
+            return .failure(NetworkProviderError.emptyURLRequest)
         }
         
-        urlSession.dataTask(with: urlRequest) { (data, _, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
+        do {
+            let (data, response) = try await urlSession.data(for: urlRequest)
+            
+            guard let response = response as? HTTPURLResponse else {
+                return .failure(NetworkProviderError.emptyResponse)
             }
             
-            guard let data = data else {
-                completion(.failure(NetworkProviderError.emptyData))
-                return
+            switch response.statusCode {
+            case 200...299:
+                return .success(data)
+            case 401:
+                return .failure(NetworkProviderError.unauthorized)
+            default:
+                return .failure(NetworkProviderError.unexpedtedStatusCode)
             }
-            
-            completion(.success(data))
-        }.resume()
+        } catch {
+            return .failure(NetworkProviderError.unknown)
+        }
     }
 }
