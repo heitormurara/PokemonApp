@@ -37,7 +37,6 @@
 		5843D2A92A14267C0018BFEA /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843D2A82A14267C0018BFEA /* UIView+Constraints.swift */; };
 		5843D2AC2A1432520018BFEA /* DispatchQueue+Dispatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843D2AB2A1432520018BFEA /* DispatchQueue+Dispatching.swift */; };
 		5843D2AE2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843D2AD2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift */; };
-		5843D2B02A1476D40018BFEA /* ArrayAsyncSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843D2AF2A1476D40018BFEA /* ArrayAsyncSequence.swift */; };
 		5843D2B22A14877C0018BFEA /* RegexInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843D2B12A14877C0018BFEA /* RegexInterpreter.swift */; };
 		586FB3B12A0F42BE0003D2AB /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3B02A0F42BE0003D2AB /* NetworkProvider.swift */; };
 		586FB3B52A0FE0770003D2AB /* SpeciesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586FB3B42A0FE0770003D2AB /* SpeciesListViewController.swift */; };
@@ -109,7 +108,6 @@
 		5843D2A82A14267C0018BFEA /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		5843D2AB2A1432520018BFEA /* DispatchQueue+Dispatching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Dispatching.swift"; sourceTree = "<group>"; };
 		5843D2AD2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchGroup+DispatchingGroup.swift"; sourceTree = "<group>"; };
-		5843D2AF2A1476D40018BFEA /* ArrayAsyncSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayAsyncSequence.swift; sourceTree = "<group>"; };
 		5843D2B12A14877C0018BFEA /* RegexInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexInterpreter.swift; sourceTree = "<group>"; };
 		586FB3B02A0F42BE0003D2AB /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		586FB3B42A0FE0770003D2AB /* SpeciesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewController.swift; sourceTree = "<group>"; };
@@ -367,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				5843D2B12A14877C0018BFEA /* RegexInterpreter.swift */,
-				5843D2AF2A1476D40018BFEA /* ArrayAsyncSequence.swift */,
 				58059BE62A11CCE9000AB195 /* EvolutionChain */,
 				58059BE52A11CCDE000AB195 /* Specie */,
 				58059BE42A11CCD7000AB195 /* Pagination */,
@@ -749,7 +746,6 @@
 				581509522A1124D700F4D3CE /* Dispatching.swift in Sources */,
 				5843D2AC2A1432520018BFEA /* DispatchQueue+Dispatching.swift in Sources */,
 				5843D2AE2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift in Sources */,
-				5843D2B02A1476D40018BFEA /* ArrayAsyncSequence.swift in Sources */,
 				58059BFD2A1297D9000AB195 /* ErrorImage.swift in Sources */,
 				58059BEA2A11D445000AB195 /* NavigationControlling.swift in Sources */,
 				586FB3BC2A0FE1C60003D2AB /* Specie.swift in Sources */,
