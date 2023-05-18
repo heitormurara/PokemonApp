@@ -68,6 +68,8 @@ extension EmptyStateView {
     }
     
     private func handleAction() {
+        drop()
+        
         Task.detached { [weak self] in
             await self?.model?.actionHandler()
         }
