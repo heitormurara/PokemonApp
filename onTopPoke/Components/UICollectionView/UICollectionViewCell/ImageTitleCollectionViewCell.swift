@@ -1,8 +1,9 @@
 import UIKit
 
-final class SpecieCollectionViewCell: UICollectionViewCell, Reusable {
+final class ImageTitleCollectionViewCell: UICollectionViewCell, Reusable {
     private let imageView = UIImageView()
-    private let nameLabel: UILabel = {
+    
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .medium)
@@ -21,16 +22,16 @@ final class SpecieCollectionViewCell: UICollectionViewCell, Reusable {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-        nameLabel.text = nil
+        titleLabel.text = nil
     }
     
-    func set(image: UIImage, name: String) {
+    func set(image: UIImage, title: String) {
         imageView.image = image
-        nameLabel.text = name.capitalized
+        titleLabel.text = title
     }
 }
 
-extension SpecieCollectionViewCell {
+extension ImageTitleCollectionViewCell {
     private func setUp() {
         setUpConstraints()
         backgroundColor = .systemBackground
@@ -38,13 +39,13 @@ extension SpecieCollectionViewCell {
     }
     
     private func setUpConstraints() {
-        addSubviews(imageView, nameLabel)
+        addSubviews(imageView, titleLabel)
         
         imageView
             .centerX(equalTo: centerXAnchor)
             .top(equalTo: topAnchor, constant: 8)
 
-        nameLabel
+        titleLabel
             .constraint(.leading, .trailing, .bottom, equalTo: self)
             .top(equalTo: imageView.bottomAnchor)
     }

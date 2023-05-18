@@ -12,16 +12,18 @@ final class SpeciesListViewController: UIViewController {
     let presenter: SpeciesListPresenting
     
     private lazy var collectionView: UICollectionView = {
+        let sectionInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         let layout = CollectionViewColumnFlowLayout(cellsPerRow: 2,
                                                     minimumInteritemSpacing: 8,
                                                     minimumLineSpacing: 8,
-                                                    sectionInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+                                                    sectionInset: sectionInsets)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(SpecieCollectionViewCell.self,
-                                forCellWithReuseIdentifier: SpecieCollectionViewCell.reuseIdentifier)
+        let reuseIdentifier = ImageTitleCollectionViewCell.reuseIdentifier
+        collectionView.register(ImageTitleCollectionViewCell.self,
+                                forCellWithReuseIdentifier: reuseIdentifier)
         return collectionView
     }()
     
@@ -105,7 +107,8 @@ extension SpeciesListViewController: UICollectionViewDelegate {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         presenter.didSelectRow(at: indexPath)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
@@ -115,18 +118,22 @@ extension SpeciesListViewController: UICollectionViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension SpeciesListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         presenter.dataSource.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: SpecieCollectionViewCell.reuseIdentifier, for: indexPath)
-        guard let cell = reusableCell as? SpecieCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let reuseIdentifier = ImageTitleCollectionViewCell.reuseIdentifier
+        let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                              for: indexPath)
+        guard let cell = reusableCell as? ImageTitleCollectionViewCell else {
             return reusableCell
         }
         
         let specie = presenter.dataSource[indexPath.row]
-        cell.set(image: specie.image!, name: specie.name)
+        cell.set(image: specie.image!, title: specie.name.capitalized)
         return cell
     }
 }
