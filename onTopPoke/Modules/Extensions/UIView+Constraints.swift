@@ -29,7 +29,7 @@ extension UIView {
     @discardableResult
     func trailing(equalTo anchor: NSLayoutAnchor<NSLayoutXAxisAnchor>, constant: CGFloat = 0) -> UIView {
         setConstrainable()
-        trailingAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+        trailingAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
         return self
     }
     
@@ -43,7 +43,7 @@ extension UIView {
     @discardableResult
     func bottom(equalTo anchor: NSLayoutAnchor<NSLayoutYAxisAnchor>, constant: CGFloat = 0) -> UIView {
         setConstrainable()
-        bottomAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+        bottomAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
         return self
     }
     

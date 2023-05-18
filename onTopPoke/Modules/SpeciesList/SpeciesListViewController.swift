@@ -11,12 +11,18 @@ protocol SpeciesListViewControllerDelegate: AnyObject {
 final class SpeciesListViewController: UIViewController {
     let presenter: SpeciesListPresenting
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
+    private lazy var collectionView: UICollectionView = {
+        let layout = CollectionViewColumnFlowLayout(cellsPerRow: 2,
+                                                    minimumInteritemSpacing: 8,
+                                                    minimumLineSpacing: 8,
+                                                    sectionInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(SpecieCollectionViewCell.self,
+                                forCellWithReuseIdentifier: SpecieCollectionViewCell.reuseIdentifier)
+        return collectionView
     }()
     
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -67,7 +73,7 @@ final class SpeciesListViewController: UIViewController {
 
 extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     func reloadData() {
-        tableView.reloadData()
+        collectionView.reloadData()
     }
     
     func displayLoading(_ isVisible: Bool) {
@@ -75,7 +81,7 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
     }
     
     func displayFooterSpinner(_ isVisible: Bool) {
-        tableView.tableFooterView = isVisible ? footerSpinnerView : nil
+//        tableView.tableFooterView = isVisible ? footerSpinnerView : nil
     }
     
     func displayError(with model: EmptyStateModelling) {
@@ -86,12 +92,12 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
 
 // MARK: - UITableViewDelegate
 
-extension SpeciesListViewController: UITableViewDelegate {
+extension SpeciesListViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
-        
+
         if contentOffset > contentHeight - frameHeight - 100 {
             Task.detached { [weak self] in
                 await self?.presenter.viewDidScroll()
@@ -99,29 +105,28 @@ extension SpeciesListViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.didSelectRow(at: indexPath)
-        tableView.deselectRow(at: indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 
 
 // MARK: - UITableViewDataSource
 
-extension SpeciesListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SpeciesListViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter.dataSource.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "SpeciesListCell")
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let reusableCell = collectionView.dequeueReusableCell(withReuseIdentifier: SpecieCollectionViewCell.reuseIdentifier, for: indexPath)
+        guard let cell = reusableCell as? SpecieCollectionViewCell else {
+            return reusableCell
+        }
         
         let specie = presenter.dataSource[indexPath.row]
-        var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = specie.name.capitalized
-        contentConfiguration.image = specie.image
-        cell.contentConfiguration = contentConfiguration
-        
+        cell.set(image: specie.image!, name: specie.name)
         return cell
     }
 }
@@ -133,12 +138,12 @@ extension SpeciesListViewController: UITableViewDataSource {
 extension SpeciesListViewController {
     private func setUp() {
         setUpConstraints()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
         title = "Pokémon Species"
     }
     
     private func setUpConstraints() {
-        view.addSubview(tableView)
-        tableView.constraints(equalTo: view)
+        view.addSubview(collectionView)
+        collectionView.constraints(equalTo: view)
     }
 }
