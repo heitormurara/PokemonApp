@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1F865D2A15EC2D00B7655D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A1F865C2A15EC2D00B7655D /* Localizable.strings */; };
+		1A1F865F2A15EC8800B7655D /* String+LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1F865E2A15EC8800B7655D /* String+LocalizedString.swift */; };
+		1A1F86622A15EE9B00B7655D /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1F86612A15EE9B00B7655D /* LocalizedString.swift */; };
 		1AF8709E2A15C4F500A98BB4 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */; };
 		1AF870A12A15CB2800A98BB4 /* EmptyStateModelling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */; };
 		1AF870A42A15DD7000A98BB4 /* ImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A32A15DD7000A98BB4 /* ImageTitleCollectionViewCell.swift */; };
@@ -80,6 +83,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A1F865C2A15EC2D00B7655D /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		1A1F865E2A15EC8800B7655D /* String+LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LocalizedString.swift"; sourceTree = "<group>"; };
+		1A1F86612A15EE9B00B7655D /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateModelling.swift; sourceTree = "<group>"; };
 		1AF870A32A15DD7000A98BB4 /* ImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -163,6 +169,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A1F86602A15EE8900B7655D /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				1A1F865C2A15EC2D00B7655D /* Localizable.strings */,
+				1A1F86612A15EE9B00B7655D /* LocalizedString.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		1AF8709F2A15CB1B00A98BB4 /* EmptyStateView */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +387,7 @@
 				5843D2A82A14267C0018BFEA /* UIView+Constraints.swift */,
 				5843D2AB2A1432520018BFEA /* DispatchQueue+Dispatching.swift */,
 				5843D2AD2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift */,
+				1A1F865E2A15EC8800B7655D /* String+LocalizedString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -500,6 +516,7 @@
 		58A6D6542A0F3A5800902695 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1A1F86602A15EE8900B7655D /* Strings */,
 				710FC3072A02DBA100899EA2 /* Info.plist */,
 				710FC3022A02DBA100899EA2 /* Assets.xcassets */,
 				710FC2F92A02DBA000899EA2 /* AppDelegate.swift */,
@@ -739,6 +756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				710FC3242A02E0B100899EA2 /* README.md in Resources */,
+				1A1F865D2A15EC2D00B7655D /* Localizable.strings in Resources */,
 				710FC3062A02DBA100899EA2 /* LaunchScreen.storyboard in Resources */,
 				710FC3032A02DBA100899EA2 /* Assets.xcassets in Resources */,
 			);
@@ -785,10 +803,12 @@
 				581509522A1124D700F4D3CE /* Dispatching.swift in Sources */,
 				5843D2AC2A1432520018BFEA /* DispatchQueue+Dispatching.swift in Sources */,
 				5843D2AE2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift in Sources */,
+				1A1F865F2A15EC8800B7655D /* String+LocalizedString.swift in Sources */,
 				58059BEA2A11D445000AB195 /* NavigationControlling.swift in Sources */,
 				586FB3BC2A0FE1C60003D2AB /* Specie.swift in Sources */,
 				586FB3C72A1021200003D2AB /* Page.swift in Sources */,
 				1AF870A12A15CB2800A98BB4 /* EmptyStateModelling.swift in Sources */,
+				1A1F86622A15EE9B00B7655D /* LocalizedString.swift in Sources */,
 				58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */,
 				586FB3B92A0FE1950003D2AB /* PokeAPIRoute.swift in Sources */,
 				710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */,

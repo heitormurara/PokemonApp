@@ -146,7 +146,7 @@ extension SpeciesListViewController {
     private func setUp() {
         setUpConstraints()
         view.backgroundColor = .systemGray6
-        title = "Pokémon Species"
+        title = String(LocalizedString.speciesListTitle)
     }
     
     private func setUpConstraints() {

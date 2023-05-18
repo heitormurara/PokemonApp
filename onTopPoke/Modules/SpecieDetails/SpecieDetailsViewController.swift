@@ -23,7 +23,7 @@ final class SpecieDetailsViewController: UIViewController {
     
     private lazy var tableHeaderView: UIView = {
         let label = UILabel()
-        label.text = "Evolution Chain"
+        label.text = String(LocalizedString.specieDetailsEvolutionChainListTitle)
         label.font = .boldSystemFont(ofSize: 24)
         
         let (_, containerView) = label.inContainer()
