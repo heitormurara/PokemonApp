@@ -4,7 +4,7 @@ import UIKit
 protocol SpecieDetailsViewControllerDelegate: AnyObject {
     func display()
     func displayLoading(_ isVisible: Bool)
-    func displayError()
+    func displayError(with model: EmptyStateModelling)
 }
 
 final class SpecieDetailsViewController: UIViewController {
@@ -44,6 +44,8 @@ final class SpecieDetailsViewController: UIViewController {
         return activityIndicatorView
     }()
     
+    private lazy var emptyStateView = EmptyStateView()
+    
     init(presenter: SpecieDetailsPresenting) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -68,8 +70,6 @@ final class SpecieDetailsViewController: UIViewController {
 
 extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
     func display() {
-        tableView.isHidden = false
-        
         title = presenter.specie.name.capitalized
         imageView.image = presenter.specie.image
         tableView.reloadData()
@@ -79,8 +79,8 @@ extension SpecieDetailsViewController: SpecieDetailsViewControllerDelegate {
         isVisible ? loadingView.startAnimating() : loadingView.stopAnimating()
     }
     
-    func displayError() {
-        tableView.isHidden = true
+    func displayError(with model: EmptyStateModelling) {
+        emptyStateView.show(in: self, with: model)
     }
 }
 
