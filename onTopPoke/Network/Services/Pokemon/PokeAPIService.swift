@@ -2,8 +2,7 @@ import Foundation
 
 protocol PokeAPIServicing {
     func getSpecies(at page: Page) async -> Result<Paginated<Specie>, Error>
-    func getSpecie(withID specieID: Int) async -> Result<SpecieDetails, Error>
-    func getEvolutionChain(withID chainID: Int) async -> Result<[Specie], Error>
+    func getEvolutionChain(forSpecieID specieID: Int) async -> Result<[Specie], Error>
 }
 
 final class PokeAPIService {
@@ -30,19 +29,12 @@ extension PokeAPIService: PokeAPIServicing {
         }
     }
     
-    func getSpecie(withID specieID: Int) async -> Result<SpecieDetails, Error> {
-        await networkProvider.request(networkRoute.getSpecie(specieID: specieID),
-                                      decodeInto: SpecieDetails.self)
-    }
-    
-    func getEvolutionChain(withID chainID: Int) async -> Result<[Specie], Error> {
-        let result = await networkProvider.request(networkRoute.getEvolutionChain(chainID: chainID),
-                                                   decodeInto: EvolutionChainResponse.self)
+    func getEvolutionChain(forSpecieID specieID: Int) async -> Result<[Specie], Error> {
+        let result = await getSpecie(withID: specieID)
         
         switch result {
-        case let .success(response):
-            let species = await getImages(from: response.flatSpecieChain)
-            return .success(species)
+        case let .success(specieDetails):
+            return await getEvolutionChain(withID: specieDetails.evolutionChainID)
         case let .failure(error):
             return .failure(error)
         }
@@ -78,5 +70,23 @@ extension PokeAPIService {
     
     private func getImage(from specieID: Int) async -> Result<Data, Error> {
         await networkProvider.request(networkRoute.getImage(specieID: specieID))
+    }
+    
+    private func getSpecie(withID specieID: Int) async -> Result<SpecieDetails, Error> {
+        await networkProvider.request(networkRoute.getSpecie(specieID: specieID),
+                                      decodeInto: SpecieDetails.self)
+    }
+    
+    private func getEvolutionChain(withID chainID: Int) async -> Result<[Specie], Error> {
+        let result = await networkProvider.request(networkRoute.getEvolutionChain(chainID: chainID),
+                                                   decodeInto: EvolutionChainResponse.self)
+
+        switch result {
+        case let .success(response):
+            let species = await getImages(from: response.flatSpecieChain)
+            return .success(species)
+        case let .failure(error):
+            return .failure(error)
+        }
     }
 }

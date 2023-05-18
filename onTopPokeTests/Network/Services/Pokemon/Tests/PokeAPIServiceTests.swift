@@ -1,51 +1,128 @@
 import XCTest
+import Quick
+import Nimble
 @testable import onTopPoke
 
-final class PokeAPIServiceTests: XCTestCase {
-    var networkProvider: NetworkProviding?
-    var sut: PokeAPIServicing?
-    
-    override func setUp() {
-        let networkProvider = NetworkProviderStub()
-        self.networkProvider = networkProvider
+final class PokeAPIServiceSpec: AsyncSpec {
+    override class func spec() {
+        var networkProviderStub: NetworkProviderStub!
+        var sut: PokeAPIService!
         
-        sut = PokeAPIService(networkProvider: networkProvider)
-    }
-    
-    override func tearDown() {
-        networkProvider = nil
-        sut = nil
-    }
-    
-    func test_getSpecies_onNetworkSuccess() async throws {
-        let networkProviderStub = try XCTUnwrap(networkProvider as? NetworkProviderStub)
-        let fileName = "speciePaginatedResult-single"
-        let expectedDecodable: Paginated<Specie> = JSONReader().getFromFile(named: fileName)
-        networkProviderStub.requestDecodableSuccess = expectedDecodable
-        let expectedData = UIImage(systemName: "person")?.pngData()
-        networkProviderStub.requestDataSuccess = expectedData
-        
-        let result = await sut?.getSpecies(at: Page(limit: 20, offset: 0))
-        guard case let .success(paginated) = result else {
-            XCTFail("Service should return a Decodable `Paginated<Specie>` on Provider success.")
-            return
+        beforeEach {
+            networkProviderStub = NetworkProviderStub()
+            sut = PokeAPIService(networkProvider: networkProviderStub)
         }
         
-        XCTAssertEqual(paginated.nextPage, Page(limit: 20, offset: 20), "Returned Page should match the expected `Page`.")
-        XCTAssertEqual(paginated.array.first?.id, expectedDecodable.array.first?.id, "Returned Array should match the expected Array.")
-        XCTAssertNotEqual(expectedDecodable.array.first?.image?.pngData(), expectedData, "Returned item Image Data should match `expectedData`.")
-    }
-    
-    func test_getSpecies_onNetworkFailure() async throws {
-        let networkProviderStub = try XCTUnwrap(networkProvider as? NetworkProviderStub)
-        networkProviderStub.requestDecodableFailure = StubError.custom
-        
-        let result = await sut?.getSpecies(at: Page(limit: 20, offset: 0))
-        guard case let .failure(error) = result else {
-            XCTFail("Service should return an Error on Provider failure.")
-            return
+        describe("getSpecies") {
+            context("request success") {
+                let fileName = "speciePaginatedResult-single"
+                
+                beforeEach {
+                    let decodable: Paginated<Specie> = JSONReader().getFromFile(named: fileName)
+                    networkProviderStub?.requestDecodableSuccess = decodable
+                    
+                    let data = UIImage(systemName: "person")?.pngData()
+                    networkProviderStub?.requestDataSuccess = data
+                }
+                
+                it("returns expected nextPage") {
+                    let result = await sut.getSpecies(at: Page(limit: 20, offset: 0))
+                    expect(result).to(beSuccess { paginated in
+                        expect(paginated.nextPage).to(equal(Page(limit: 20, offset: 20)))
+                    })
+                }
+                
+                it("returns expected specie") {
+                    let result = await sut.getSpecies(at: Page(limit: 20, offset: 0))
+                    expect(result).to(beSuccess { paginated in
+                        expect(paginated.array.first?.id).to(equal(1))
+                    })
+                }
+                
+                it("returns species with images") {
+                    let result = await sut.getSpecies(at: Page(limit: 20, offset: 0))
+                    expect(result).to(beSuccess { paginated in
+                        expect(paginated.array.first?.image).toNot(beNil())
+                    })
+                }
+            }
+            
+            context("request failure") {
+                beforeEach {
+                    networkProviderStub.requestDecodableFailure = StubError.custom
+                }
+                
+                it("returns expected error") {
+                    let result = await sut.getSpecies(at: Page(limit: 20, offset: 0))
+                    expect(result).to(beFailure { error in
+                        expect(error).to(matchError(StubError.custom))
+                    })
+                }
+            }
         }
         
-        XCTAssertEqual(error as? StubError, StubError.custom, "Returned Error should match the expected `StubError.custom`")
+        describe("getEvolutionChain") {
+            context("existent specieDetails") {
+                let fileName = "specieDetails-single"
+                
+                beforeEach {
+                    let decodable: SpecieDetails = JSONReader().getFromFile(named: fileName)
+                    networkProviderStub?.requestDecodableSuccess = decodable
+                }
+                
+                context("request success") {
+//                    let fileName = "evolutionChain"
+//                    
+//                    beforeEach {
+//                        let decodable: EvolutionChainResponse = JSONReader().getFromFile(named: fileName)
+//                        networkProviderStub?.requestDecodableSuccess = decodable
+//                        
+//                        let data = UIImage(systemName: "person")?.pngData()
+//                        networkProviderStub?.requestDataSuccess = data
+//                    }
+//                    
+//                    it("returns expected chain") {
+//                        let result = await sut.getEvolutionChain(forSpecieID: 1)
+//                        expect(result).to(beSuccess { species in
+//                            expect(species.first?.id).to(equal(1))
+//                        })
+//                    }
+//                    
+//                    it("returns species with images") {
+//                        let result = await sut.getEvolutionChain(forSpecieID: 1)
+//                        expect(result).to(beSuccess { species in
+//                            expect(species.first?.image).toNot(beNil())
+//                        })
+//                    }
+                }
+                
+                context("request failure") {
+                    beforeEach {
+                        networkProviderStub.requestDecodableSuccess = nil
+                        networkProviderStub.requestDecodableFailure = StubError.custom
+                    }
+                    
+                    it("returns expected error") {
+                        let result = await sut.getEvolutionChain(forSpecieID: 1)
+                        expect(result).to(beFailure { error in
+                            expect(error).to(matchError(StubError.custom))
+                        })
+                    }
+                }
+            }
+            
+            context("non-existent specieDetails") {
+                beforeEach {
+                    networkProviderStub.requestDecodableFailure = StubError.custom
+                }
+                
+                it("returns expected error") {
+                    let result = await sut.getEvolutionChain(forSpecieID: 1)
+                    expect(result).to(beFailure { error in
+                        expect(error).to(matchError(StubError.custom))
+                    })
+                }
+            }
+        }
     }
 }
