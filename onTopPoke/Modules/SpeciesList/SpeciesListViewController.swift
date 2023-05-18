@@ -5,7 +5,7 @@ protocol SpeciesListViewControllerDelegate: AnyObject {
     func reloadData()
     func displayLoading(_ isVisible: Bool)
     func displayFooterSpinner(_ isVisible: Bool)
-    func displayError(with model: EmptyStateModel)
+    func displayError(with model: EmptyStateModelling)
 }
 
 final class SpeciesListViewController: UIViewController {
@@ -35,6 +35,7 @@ final class SpeciesListViewController: UIViewController {
         
         let spinner = UIActivityIndicatorView()
         spinner.center = containerView.center
+        spinner.startAnimating()
         
         containerView.addSubview(spinner)
         return containerView
@@ -77,7 +78,7 @@ extension SpeciesListViewController: SpeciesListViewControllerDelegate {
         tableView.tableFooterView = isVisible ? footerSpinnerView : nil
     }
     
-    func displayError(with model: EmptyStateModel) {
+    func displayError(with model: EmptyStateModelling) {
         emptyStateView.show(in: self, with: model)
     }
 }

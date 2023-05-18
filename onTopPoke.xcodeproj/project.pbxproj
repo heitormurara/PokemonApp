@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1AF8709E2A15C4F500A98BB4 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */; };
-		1AF870A12A15CB2800A98BB4 /* EmptyStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */; };
+		1AF870A12A15CB2800A98BB4 /* EmptyStateModelling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */; };
 		58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */; };
 		58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */; };
 		58059BDF2A118F45000AB195 /* EvolutionChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDE2A118F45000AB195 /* EvolutionChain.swift */; };
@@ -78,7 +78,7 @@
 
 /* Begin PBXFileReference section */
 		1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
-		1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateModel.swift; sourceTree = "<group>"; };
+		1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateModelling.swift; sourceTree = "<group>"; };
 		58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsViewController.swift; sourceTree = "<group>"; };
 		58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsPresenter.swift; sourceTree = "<group>"; };
 		58059BDE2A118F45000AB195 /* EvolutionChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionChain.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */,
-				1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */,
+				1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */,
 			);
 			path = EmptyStateView;
 			sourceTree = "<group>";
@@ -746,7 +746,7 @@
 				58059BEA2A11D445000AB195 /* NavigationControlling.swift in Sources */,
 				586FB3BC2A0FE1C60003D2AB /* Specie.swift in Sources */,
 				586FB3C72A1021200003D2AB /* Page.swift in Sources */,
-				1AF870A12A15CB2800A98BB4 /* EmptyStateModel.swift in Sources */,
+				1AF870A12A15CB2800A98BB4 /* EmptyStateModelling.swift in Sources */,
 				58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */,
 				586FB3B92A0FE1950003D2AB /* PokeAPIRoute.swift in Sources */,
 				710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */,

@@ -28,12 +28,18 @@ final class SpeciesListPresenter: SpeciesListPresenting {
     
     func viewDidLoad() async {
         guard !isLoading, let nextPage = paginationManager.nextPage else { return }
+        
+        defer { isLoading = false }
+        isLoading = true
         await viewControllerDelegate?.displayLoading(true)
         
         if case let .success(paginated) = await pokeAPIService.getSpecies(at: nextPage)  {
             paginationManager.nextPage = paginated.nextPage
             dataSource = paginated.array
             await viewControllerDelegate?.reloadData()
+        } else {
+            let model = GenericUnknownEmptyStateModel(actionHandler: viewDidLoad)
+            await viewControllerDelegate?.displayError(with: model)
         }
         
         await viewControllerDelegate?.displayLoading(false)
@@ -42,11 +48,14 @@ final class SpeciesListPresenter: SpeciesListPresenting {
     
     func viewDidScroll() async {
         guard !isLoading, let nextPage = paginationManager.nextPage else { return }
+        
+        defer { isLoading = false }
+        isLoading = true
         await viewControllerDelegate?.displayFooterSpinner(true)
         
         if case let .success(paginated) = await pokeAPIService.getSpecies(at: nextPage)  {
             paginationManager.nextPage = paginated.nextPage
-            dataSource = paginated.array
+            dataSource.append(contentsOf: paginated.array)
             await viewControllerDelegate?.reloadData()
         }
         

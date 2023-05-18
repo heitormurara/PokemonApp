@@ -17,7 +17,7 @@ final class EmptyStateView: UIView {
         return UIButton(type: .system, primaryAction: action)
     }()
     
-    private var model: EmptyStateModel?
+    private var model: EmptyStateModelling?
     
     init() {
         super.init(frame: .zero)
@@ -28,7 +28,7 @@ final class EmptyStateView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func show(in viewController: UIViewController, with model: EmptyStateModel) {
+    func show(in viewController: UIViewController, with model: EmptyStateModelling) {
         set(model)
         
         viewController.view.addSubview(self)
@@ -60,7 +60,8 @@ extension EmptyStateView {
             .top(equalTo: label.bottomAnchor, constant: 16)
     }
     
-    private func set(_ model: EmptyStateModel) {
+    private func set(_ model: EmptyStateModelling) {
+        self.model = model
         imageView.image = model.image
         label.text = model.text
         actionButton.setTitle(model.actionTitle, for: .normal)
