@@ -11,6 +11,7 @@
 		1AF870A12A15CB2800A98BB4 /* EmptyStateModelling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */; };
 		1AF870A42A15DD7000A98BB4 /* SpecieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A32A15DD7000A98BB4 /* SpecieCollectionViewCell.swift */; };
 		1AF870A62A15E20300A98BB4 /* CollectionViewColumnLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A52A15E20300A98BB4 /* CollectionViewColumnLayout.swift */; };
+		1AF870A82A15E96700A98BB4 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A72A15E96700A98BB4 /* Reusable.swift */; };
 		58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */; };
 		58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */; };
 		58059BDF2A118F45000AB195 /* EvolutionChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDE2A118F45000AB195 /* EvolutionChain.swift */; };
@@ -83,6 +84,7 @@
 		1AF870A02A15CB2800A98BB4 /* EmptyStateModelling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateModelling.swift; sourceTree = "<group>"; };
 		1AF870A32A15DD7000A98BB4 /* SpecieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieCollectionViewCell.swift; sourceTree = "<group>"; };
 		1AF870A52A15E20300A98BB4 /* CollectionViewColumnLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewColumnLayout.swift; sourceTree = "<group>"; };
+		1AF870A72A15E96700A98BB4 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsViewController.swift; sourceTree = "<group>"; };
 		58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsPresenter.swift; sourceTree = "<group>"; };
 		58059BDE2A118F45000AB195 /* EvolutionChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionChain.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				581509512A1124D700F4D3CE /* Dispatching.swift */,
 				58FC503F2A116F0800CBCA79 /* DispatchingGroup.swift */,
 				58059BE92A11D445000AB195 /* NavigationControlling.swift */,
+				1AF870A72A15E96700A98BB4 /* Reusable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 				58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */,
 				586FB3B92A0FE1950003D2AB /* PokeAPIRoute.swift in Sources */,
 				710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */,
+				1AF870A82A15E96700A98BB4 /* Reusable.swift in Sources */,
 				586FB3B12A0F42BE0003D2AB /* NetworkProvider.swift in Sources */,
 				586FB3B52A0FE0770003D2AB /* SpeciesListViewController.swift in Sources */,
 				58059BE12A11BBA6000AB195 /* EvolutionChainResponse.swift in Sources */,

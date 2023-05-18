@@ -1,8 +1,6 @@
 import UIKit
 
-final class SpecieCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: SpecieCollectionViewCell.self)
-    
+final class SpecieCollectionViewCell: UICollectionViewCell, Reusable {
     private let imageView = UIImageView()
     private let nameLabel: UILabel = {
         let label = UILabel()
