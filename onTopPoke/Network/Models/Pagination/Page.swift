@@ -6,7 +6,7 @@ enum PaginationError: Error {
     case noExactMatchesToRegex
 }
 
-struct Page {
+struct Page: Equatable {
     let limit: Int
     let offset: Int
     

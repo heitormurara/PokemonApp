@@ -50,7 +50,7 @@ extension PokeAPIService: PokeAPIServicing {
 }
 
 extension PokeAPIService {
-    func getImages(from species: [Specie]) async -> [Specie] {
+    private func getImages(from species: [Specie]) async -> [Specie] {
         var _species: [Specie] = []
         
         await withTaskGroup(of: Specie.self) { taskGroup in
@@ -76,7 +76,7 @@ extension PokeAPIService {
         return _species
     }
     
-    func getImage(from specieID: Int) async -> Result<Data, Error> {
+    private func getImage(from specieID: Int) async -> Result<Data, Error> {
         await networkProvider.request(networkRoute.getImage(specieID: specieID))
     }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-struct Specie: Decodable {
+struct Specie: Decodable, Equatable {
     let id: Int
     let name: String
     

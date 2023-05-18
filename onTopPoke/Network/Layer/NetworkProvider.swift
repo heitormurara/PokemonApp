@@ -39,8 +39,7 @@ extension NetworkProvider: NetworkProviding {
         do {
             let decodable = try JSONDecoder().decode(modelType, from: data)
             return .success(decodable)
-        } catch let error {
-            print(error)
+        } catch {
             return .failure(NetworkProviderError.decodingError)
         }
     }
