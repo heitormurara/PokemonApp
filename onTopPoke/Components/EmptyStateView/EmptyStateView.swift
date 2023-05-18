@@ -43,7 +43,7 @@ final class EmptyStateView: UIView {
 extension EmptyStateView {
     private func setUp() {
         setUpConstraints()
-        backgroundColor = .green
+        backgroundColor = .systemBackground
     }
     
     private func setUpConstraints() {
