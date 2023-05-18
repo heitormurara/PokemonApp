@@ -28,16 +28,17 @@ final class SpecieDetailsPresenter: SpecieDetailsPresenting {
         isLoading = true
         await viewControllerDelegate?.displayLoading(true)
         
-//        guard case let .success(specieDetails) = await pokeAPIService.getSpecie(withID: specie.id),
-//              case let .success(species) = await pokeAPIService.getEvolutionChain(withID: specieDetails.evolutionChainID)
-//        else {
-//            let model = GenericUnknownEmptyStateModel(actionHandler: viewDidLoad)
-//            await viewControllerDelegate?.displayError(with: model)
-//            return
-//        }
-//        
-//        specieChain = species
+        let result = await pokeAPIService.getEvolutionChain(forSpecieID: specie.id)
+        
         await viewControllerDelegate?.displayLoading(false)
-        await viewControllerDelegate?.display()
+        
+        switch result {
+        case let .success(species):
+            self.specieChain = species
+            await viewControllerDelegate?.display()
+        case .failure:
+            let model = GenericUnknownEmptyStateModel(actionHandler: viewDidLoad)
+            await viewControllerDelegate?.displayError(with: model)
+        }
     }
 }
