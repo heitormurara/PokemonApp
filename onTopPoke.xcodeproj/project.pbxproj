@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AF8709E2A15C4F500A98BB4 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */; };
+		1AF870A12A15CB2800A98BB4 /* EmptyStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */; };
 		58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */; };
 		58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */; };
 		58059BDF2A118F45000AB195 /* EvolutionChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BDE2A118F45000AB195 /* EvolutionChain.swift */; };
@@ -17,9 +19,6 @@
 		58059BEC2A11D767000AB195 /* SpecieDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BEB2A11D767000AB195 /* SpecieDetailsCoordinator.swift */; };
 		58059BF22A127FA9000AB195 /* LoadManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BF12A127FA9000AB195 /* LoadManaging.swift */; };
 		58059BF52A127FEB000AB195 /* LoadManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BF42A127FEB000AB195 /* LoadManagerMock.swift */; };
-		58059BF82A1287F9000AB195 /* RetriableErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BF72A1287F9000AB195 /* RetriableErrorView.swift */; };
-		58059BFB2A1297CB000AB195 /* RetriableErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BFA2A1297CB000AB195 /* RetriableErrorModel.swift */; };
-		58059BFD2A1297D9000AB195 /* ErrorImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BFC2A1297D9000AB195 /* ErrorImage.swift */; };
 		58059BFF2A12B5AB000AB195 /* LoadManagerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58059BFE2A12B5AB000AB195 /* LoadManagerStub.swift */; };
 		581509342A108C2F00F4D3CE /* PokeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581509332A108C2F00F4D3CE /* PokeAPIService.swift */; };
 		5815093C2A1099EB00F4D3CE /* PokemonServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5815093B2A1099EB00F4D3CE /* PokemonServiceMock.swift */; };
@@ -78,6 +77,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateModel.swift; sourceTree = "<group>"; };
 		58059BDA2A118C91000AB195 /* SpecieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsViewController.swift; sourceTree = "<group>"; };
 		58059BDC2A118C98000AB195 /* SpecieDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsPresenter.swift; sourceTree = "<group>"; };
 		58059BDE2A118F45000AB195 /* EvolutionChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionChain.swift; sourceTree = "<group>"; };
@@ -88,9 +89,6 @@
 		58059BEB2A11D767000AB195 /* SpecieDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecieDetailsCoordinator.swift; sourceTree = "<group>"; };
 		58059BF12A127FA9000AB195 /* LoadManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadManaging.swift; sourceTree = "<group>"; };
 		58059BF42A127FEB000AB195 /* LoadManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadManagerMock.swift; sourceTree = "<group>"; };
-		58059BF72A1287F9000AB195 /* RetriableErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetriableErrorView.swift; sourceTree = "<group>"; };
-		58059BFA2A1297CB000AB195 /* RetriableErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetriableErrorModel.swift; sourceTree = "<group>"; };
-		58059BFC2A1297D9000AB195 /* ErrorImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorImage.swift; sourceTree = "<group>"; };
 		58059BFE2A12B5AB000AB195 /* LoadManagerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadManagerStub.swift; sourceTree = "<group>"; };
 		581509332A108C2F00F4D3CE /* PokeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPIService.swift; sourceTree = "<group>"; };
 		5815093B2A1099EB00F4D3CE /* PokemonServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceMock.swift; sourceTree = "<group>"; };
@@ -159,6 +157,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AF8709F2A15CB1B00A98BB4 /* EmptyStateView */ = {
+			isa = PBXGroup;
+			children = (
+				1AF8709D2A15C4F500A98BB4 /* EmptyStateView.swift */,
+				1AF870A02A15CB2800A98BB4 /* EmptyStateModel.swift */,
+			);
+			path = EmptyStateView;
+			sourceTree = "<group>";
+		};
 		58059BD72A118AE5000AB195 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,19 +223,9 @@
 		58059BF62A1287E2000AB195 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				58059BF92A1297BD000AB195 /* RetriableErrorView */,
+				1AF8709F2A15CB1B00A98BB4 /* EmptyStateView */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		58059BF92A1297BD000AB195 /* RetriableErrorView */ = {
-			isa = PBXGroup;
-			children = (
-				58059BFC2A1297D9000AB195 /* ErrorImage.swift */,
-				58059BFA2A1297CB000AB195 /* RetriableErrorModel.swift */,
-				58059BF72A1287F9000AB195 /* RetriableErrorView.swift */,
-			);
-			path = RetriableErrorView;
 			sourceTree = "<group>";
 		};
 		581509302A1087ED00F4D3CE /* Services */ = {
@@ -746,20 +743,18 @@
 				581509522A1124D700F4D3CE /* Dispatching.swift in Sources */,
 				5843D2AC2A1432520018BFEA /* DispatchQueue+Dispatching.swift in Sources */,
 				5843D2AE2A14325F0018BFEA /* DispatchGroup+DispatchingGroup.swift in Sources */,
-				58059BFD2A1297D9000AB195 /* ErrorImage.swift in Sources */,
 				58059BEA2A11D445000AB195 /* NavigationControlling.swift in Sources */,
 				586FB3BC2A0FE1C60003D2AB /* Specie.swift in Sources */,
 				586FB3C72A1021200003D2AB /* Page.swift in Sources */,
+				1AF870A12A15CB2800A98BB4 /* EmptyStateModel.swift in Sources */,
 				58FC50402A116F0800CBCA79 /* DispatchingGroup.swift in Sources */,
 				586FB3B92A0FE1950003D2AB /* PokeAPIRoute.swift in Sources */,
 				710FC2FA2A02DBA000899EA2 /* AppDelegate.swift in Sources */,
-				58059BF82A1287F9000AB195 /* RetriableErrorView.swift in Sources */,
 				586FB3B12A0F42BE0003D2AB /* NetworkProvider.swift in Sources */,
 				586FB3B52A0FE0770003D2AB /* SpeciesListViewController.swift in Sources */,
 				58059BE12A11BBA6000AB195 /* EvolutionChainResponse.swift in Sources */,
 				581509412A109C3200F4D3CE /* PaginationManaging.swift in Sources */,
 				58059BDB2A118C91000AB195 /* SpecieDetailsViewController.swift in Sources */,
-				58059BFB2A1297CB000AB195 /* RetriableErrorModel.swift in Sources */,
 				58059BDD2A118C98000AB195 /* SpecieDetailsPresenter.swift in Sources */,
 				58059BDF2A118F45000AB195 /* EvolutionChain.swift in Sources */,
 				58059BF22A127FA9000AB195 /* LoadManaging.swift in Sources */,
@@ -768,6 +763,7 @@
 				5843D2A92A14267C0018BFEA /* UIView+Constraints.swift in Sources */,
 				58059BE82A11D3E2000AB195 /* SpeciesListCoordinator.swift in Sources */,
 				581509342A108C2F00F4D3CE /* PokeAPIService.swift in Sources */,
+				1AF8709E2A15C4F500A98BB4 /* EmptyStateView.swift in Sources */,
 				586FB3BF2A0FE2430003D2AB /* Paginated.swift in Sources */,
 				58059BEC2A11D767000AB195 /* SpecieDetailsCoordinator.swift in Sources */,
 				58A6D6642A0F3EF600902695 /* HTTPMethod.swift in Sources */,
