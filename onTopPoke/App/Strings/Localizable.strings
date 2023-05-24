@@ -1,0 +1,5 @@
+// MARK: - SpeciesList
+"speciesListTitle" = "Pokémon Species";
+
+// MARK: - SpecieDetails
+"specieDetailsEvolutionChainListTitle" = "Evolution Chain";
