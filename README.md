@@ -4,7 +4,9 @@ The aim for this was to fetch a Pokemon list from an external source, with a pag
 
 # Application
 
-<Images>
+Pokemon Species             |  Pokemon Details
+:-------------------------:|:-------------------------:
+![Pokemon Species](./Images/Screenshots-PokemonSpecies.png)  |  ![Pokemon Details](./Images/Screenshots-PokemonDetail.png)
 
 # Tech Stack
 
@@ -36,7 +38,7 @@ This was built on a `UIView` extension, no external dependencies were added for 
 
 No additional framework were added for networking. For scaling and reusability purposes, a custom network layer was built.
 
-<Image>
+![Network Layer](./Images/NetworkLayer.png)
 
 Since the application only made simple GET requests, it wouldn't make sense to add heavy networking frameworks. Instead of this, it was created a structure with Routers inspired on Moya's routing system, but without the need to rely on Alamofire.
 
@@ -59,6 +61,9 @@ title = String(LocalizedString.speciesListTitle)
 ## UI Design Pattern
 
 The **MVP-C** was chosen as the UI Design Pattern since it's more fittable with the stack and provides enough isolation for unit testing.
+
+![MVP-C by Guilherme Cherubini](https://miro.medium.com/v2/resize:fit:720/format:webp/1*NIa_pUSTrxReRYigjsy0WQ.png)
+
 
 ## Unit Testing
 
