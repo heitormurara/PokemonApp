@@ -408,8 +408,8 @@
 		58A6D6542A0F3A5800902695 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				1A1F86602A15EE8900B7655D /* Strings */,
 				710FC3072A02DBA100899EA2 /* Info.plist */,
+				1A1F86602A15EE8900B7655D /* Strings */,
 				710FC3022A02DBA100899EA2 /* Assets.xcassets */,
 				710FC2F92A02DBA000899EA2 /* AppDelegate.swift */,
 				710FC2FB2A02DBA000899EA2 /* SceneDelegate.swift */,
@@ -851,7 +851,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Q3KXH668K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = onTopPoke/App/Info.plist;
+				INFOPLIST_FILE = PokemonApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -882,7 +882,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5Q3KXH668K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = onTopPoke/App/Info.plist;
+				INFOPLIST_FILE = PokemonApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
